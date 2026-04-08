@@ -6,7 +6,9 @@ Lectigo is an iOS SwiftUI prototype that opens YouTube in a `WKWebView`, capture
 
 The app shell, web view capture loop, OCR pipeline boundary, speech output, and a usable on-device Vision OCR fallback are implemented.
 
-The actual Paddle Lite iOS inference code and PP-OCRv5 model files are not present in this empty workspace yet. Add the Paddle Lite iOS runtime, optimized PP-OCRv5 `.nb` files, and replace `Lectigo/Sources/Native/PaddleOCRBridge.mm` with the detector/recognizer preprocessing, inference, and postprocessing. Until then, the app falls back to Apple's on-device Vision OCR so the IPA remains usable.
+The repository now includes the official Paddle Lite iOS arm64 runtime in `ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8` and bundles the official `PP-OCRv5_mobile_det.nb`, `PP-OCRv5_mobile_rec.nb`, and `ppocr_keys_ocrv5.txt` model assets.
+
+`Lectigo/Sources/Native/PaddleOCRBridge.mm` now links against the real Paddle Lite headers/library and validates that the bundled predictors can be created. The actual detector preprocessing, box decoding, crop extraction, recognizer tensor feed, and OCR postprocessing are still not implemented there, so the app falls back to Apple's on-device Vision OCR for usable recognition.
 
 ## GitHub Actions Build
 

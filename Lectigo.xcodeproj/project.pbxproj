@@ -17,6 +17,10 @@
 		111111111111111111111108 /* PaddleOCRBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111008 /* PaddleOCRBridge.mm */; };
 		111111111111111111111109 /* FallbackCaptionRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111100D /* FallbackCaptionRecognizer.swift */; };
 		11111111111111111111110A /* VisionCaptionRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111100E /* VisionCaptionRecognizer.swift */; };
+		11111111111111111111110B /* libpaddle_api_light_bundled.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11111111111111111111100F /* libpaddle_api_light_bundled.a */; };
+		11111111111111111111110C /* PP-OCRv5_mobile_det.nb in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111010 /* PP-OCRv5_mobile_det.nb */; };
+		11111111111111111111110D /* PP-OCRv5_mobile_rec.nb in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111011 /* PP-OCRv5_mobile_rec.nb */; };
+		11111111111111111111110E /* ppocr_keys_ocrv5.txt in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111012 /* ppocr_keys_ocrv5.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +38,10 @@
 		11111111111111111111100C /* Lectigo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lectigo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11111111111111111111100D /* FallbackCaptionRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallbackCaptionRecognizer.swift; sourceTree = "<group>"; };
 		11111111111111111111100E /* VisionCaptionRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionCaptionRecognizer.swift; sourceTree = "<group>"; };
+		11111111111111111111100F /* libpaddle_api_light_bundled.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpaddle_api_light_bundled.a; path = ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/lib/libpaddle_api_light_bundled.a; sourceTree = SOURCE_ROOT; };
+		111111111111111111111010 /* PP-OCRv5_mobile_det.nb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PP-OCRv5_mobile_det.nb"; path = Lectigo/Models/PaddleOCRv5/PP-OCRv5_mobile_det.nb; sourceTree = SOURCE_ROOT; };
+		111111111111111111111011 /* PP-OCRv5_mobile_rec.nb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PP-OCRv5_mobile_rec.nb"; path = Lectigo/Models/PaddleOCRv5/PP-OCRv5_mobile_rec.nb; sourceTree = SOURCE_ROOT; };
+		111111111111111111111012 /* ppocr_keys_ocrv5.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = ppocr_keys_ocrv5.txt; path = Lectigo/Models/PaddleOCRv5/ppocr_keys_ocrv5.txt; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11111111111111111111110B /* libpaddle_api_light_bundled.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				111111111111111111111302 /* Lectigo */,
+				111111111111111111111309 /* ThirdParty */,
 				111111111111111111111303 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				111111111111111111111304 /* Sources */,
+				11111111111111111111130A /* Models */,
 				11111111111111111111100B /* Info.plist */,
 			);
 			path = Lectigo;
@@ -123,6 +134,40 @@
 			path = Native;
 			sourceTree = "<group>";
 		};
+		111111111111111111111309 /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				11111111111111111111130C /* PaddleLite */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		11111111111111111111130A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				11111111111111111111130B /* PaddleOCRv5 */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		11111111111111111111130B /* PaddleOCRv5 */ = {
+			isa = PBXGroup;
+			children = (
+				111111111111111111111010 /* PP-OCRv5_mobile_det.nb */,
+				111111111111111111111011 /* PP-OCRv5_mobile_rec.nb */,
+				111111111111111111111012 /* ppocr_keys_ocrv5.txt */,
+			);
+			path = PaddleOCRv5;
+			sourceTree = "<group>";
+		};
+		11111111111111111111130C /* PaddleLite */ = {
+			isa = PBXGroup;
+			children = (
+				11111111111111111111100F /* libpaddle_api_light_bundled.a */,
+			);
+			path = PaddleLite;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -181,6 +226,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11111111111111111111110C /* PP-OCRv5_mobile_det.nb in Resources */,
+				11111111111111111111110D /* PP-OCRv5_mobile_rec.nb in Resources */,
+				11111111111111111111110E /* ppocr_keys_ocrv5.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,8 +388,23 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/lib",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lc++",
+					"-ObjC",
+					"-force_load",
+					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/lib/libpaddle_api_light_bundled.a",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.Lectigo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/include",
+				);
 				SWIFT_OBJC_BRIDGING_HEADER = "Lectigo/Sources/Native/Lectigo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -363,8 +426,23 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/lib",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lc++",
+					"-ObjC",
+					"-force_load",
+					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/lib/libpaddle_api_light_bundled.a",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.Lectigo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/include",
+				);
 				SWIFT_OBJC_BRIDGING_HEADER = "Lectigo/Sources/Native/Lectigo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
