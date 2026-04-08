@@ -1,0 +1,54 @@
+name: Build unsigned iOS IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build unsigned IPA
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Build app without code signing
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project Lectigo.xcodeproj \
+            -scheme Lectigo \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            DEVELOPMENT_TEAM="" \
+            build
+
+      - name: Package unsigned IPA
+        run: |
+          set -euo pipefail
+          APP_PATH="$(find build/Build/Products/Release-iphoneos -maxdepth 1 -name '*.app' -print -quit)"
+          if [ -z "$APP_PATH" ]; then
+            echo "No .app found in Release-iphoneos output" >&2
+            exit 1
+          fi
+          rm -rf Payload Lectigo-unsigned.ipa
+          mkdir -p Payload
+          cp -R "$APP_PATH" Payload/Lectigo.app
+          /usr/bin/zip -qry Lectigo-unsigned.ipa Payload
+
+      - name: Upload unsigned IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: Lectigo-unsigned-ipa
+          path: Lectigo-unsigned.ipa
+          if-no-files-found: error
