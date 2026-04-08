@@ -116,10 +116,13 @@ std::vector<std::vector<float>> GetMiniBoxes(cv::RotatedRect box,
                                              float &ssid) { // NOLINT
   ssid = std::min(box.size.width, box.size.height);
 
-  cv::Mat points;
-  cv::boxPoints(box, points);
-
-  auto array = Mat2Vector(points);
+  cv::Point2f box_points[4];
+  box.points(box_points);
+  std::vector<std::vector<float>> array(4, std::vector<float>(2, 0.0f));
+  for (int i = 0; i < 4; ++i) {
+    array[i][0] = box_points[i].x;
+    array[i][1] = box_points[i].y;
+  }
   std::sort(array.begin(), array.end(), XsortFp32);
 
   std::vector<float> idx1 = array[0], idx2 = array[1], idx3 = array[2],
