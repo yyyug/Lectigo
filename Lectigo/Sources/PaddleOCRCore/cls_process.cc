@@ -87,7 +87,10 @@ cv::Mat ClsPredictor::Postprocess(const cv::Mat &srcimg, const float thresh) {
     }
   }
   if (label % 2 == 1 && score > thresh) {
-    cv::rotate(srcimg, srcimg, 1);
+    cv::Mat rotated;
+    cv::transpose(srcimg, rotated);
+    cv::flip(rotated, rotated, 1);
+    return rotated;
   }
   return srcimg;
 }
