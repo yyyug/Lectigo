@@ -10,6 +10,7 @@ final class VideoCaptionMonitor: ObservableObject {
     private weak var webView: WKWebView?
     private let recognizer: CaptionOCRRecognizing
     private let announcer: SpeechAnnouncer
+    private var settings = CaptureSettings()
     private var timer: Timer?
     private var isProcessingFrame = false
     private var lastSpokenText = ""
@@ -25,9 +26,10 @@ final class VideoCaptionMonitor: ObservableObject {
 
     func start() {
         guard !isRunning else { return }
+        settings.sanitize()
         isRunning = true
         statusText = "Watching video captions"
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: settings.captureInterval, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 await self?.processFrameIfNeeded()
             }
@@ -42,6 +44,17 @@ final class VideoCaptionMonitor: ObservableObject {
         isProcessingFrame = false
         statusText = "OCR stopped"
         announcer.stop()
+    }
+
+    func updateSettings(_ settings: CaptureSettings) {
+        var sanitized = settings
+        sanitized.sanitize()
+        self.settings = sanitized
+
+        if isRunning {
+            stop()
+            start()
+        }
     }
 
     private func processFrameIfNeeded() async {
@@ -90,13 +103,16 @@ final class VideoCaptionMonitor: ObservableObject {
 
     private func takeCaptionSnapshot(from webView: WKWebView) async throws -> UIImage {
         let bounds = webView.bounds
-        let captionHeight = max(bounds.height * 0.35, 180)
+        let leftInset = bounds.width * settings.cropLeftPercent / 100
+        let rightInset = bounds.width * settings.cropRightPercent / 100
+        let topInset = bounds.height * settings.cropTopPercent / 100
+        let bottomInset = bounds.height * settings.cropBottomPercent / 100
         let cropRect = CGRect(
-            x: 0,
-            y: max(bounds.height - captionHeight, 0),
-            width: bounds.width,
-            height: min(captionHeight, bounds.height)
-        )
+            x: leftInset,
+            y: topInset,
+            width: max(bounds.width - leftInset - rightInset, 1),
+            height: max(bounds.height - topInset - bottomInset, 1)
+        ).integral
 
         let configuration = WKSnapshotConfiguration()
         configuration.rect = cropRect

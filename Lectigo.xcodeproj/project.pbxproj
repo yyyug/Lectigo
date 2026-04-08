@@ -31,6 +31,7 @@
 		111111111111111111111116 /* pipeline.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111101E /* pipeline.cc */; };
 		111111111111111111111117 /* rec_process.cc in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111020 /* rec_process.cc */; };
 		111111111111111111111118 /* utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111022 /* utils.cc */; };
+		111111111111111111111119 /* CaptureSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111025 /* CaptureSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		111111111111111111111022 /* utils.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utils.cc; sourceTree = "<group>"; };
 		111111111111111111111023 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		111111111111111111111024 /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
+		111111111111111111111025 /* CaptureSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				111111111111111111111004 /* CaptionOCRRecognizing.swift */,
+				111111111111111111111025 /* CaptureSettings.swift */,
 				111111111111111111111005 /* PaddleOCRCaptionRecognizer.swift */,
 				11111111111111111111100D /* FallbackCaptionRecognizer.swift */,
 				11111111111111111111100E /* VisionCaptionRecognizer.swift */,
@@ -308,6 +311,7 @@
 				111111111111111111111102 /* ContentView.swift in Sources */,
 				111111111111111111111103 /* YouTubeWebView.swift in Sources */,
 				111111111111111111111104 /* CaptionOCRRecognizing.swift in Sources */,
+				111111111111111111111119 /* CaptureSettings.swift in Sources */,
 				111111111111111111111105 /* PaddleOCRCaptionRecognizer.swift in Sources */,
 				111111111111111111111106 /* VideoCaptionMonitor.swift in Sources */,
 				111111111111111111111107 /* SpeechAnnouncer.swift in Sources */,
