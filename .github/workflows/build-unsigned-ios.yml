@@ -22,9 +22,9 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p ThirdParty/OpenCV
-          curl -L "https://paddlelite-demo.bj.bcebos.com/libs/ios/opencv2.framework.tar.gz" -o ThirdParty/OpenCV/opencv2.framework.tar.gz
-          tar -xzf ThirdParty/OpenCV/opencv2.framework.tar.gz -C ThirdParty/OpenCV
-          rm -f ThirdParty/OpenCV/opencv2.framework.tar.gz
+          curl -L "https://paddlelite-demo.bj.bcebos.com/libs/ios/opencv-4.5.5-ios-framework.tar.gz" -o ThirdParty/OpenCV/opencv-ios-framework.tar.gz
+          tar -xzf ThirdParty/OpenCV/opencv-ios-framework.tar.gz -C ThirdParty/OpenCV
+          rm -f ThirdParty/OpenCV/opencv-ios-framework.tar.gz
           find ThirdParty/OpenCV -name '._*' -delete
 
       - name: Build app without code signing
