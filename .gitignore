@@ -8,3 +8,4 @@ xcuserdata/
 *.hmap
 temp/
 artifacts/
+ThirdParty/OpenCV/

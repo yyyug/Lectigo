@@ -21,6 +21,16 @@
 		11111111111111111111110C /* PP-OCRv5_mobile_det.nb in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111010 /* PP-OCRv5_mobile_det.nb */; };
 		11111111111111111111110D /* PP-OCRv5_mobile_rec.nb in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111011 /* PP-OCRv5_mobile_rec.nb */; };
 		11111111111111111111110E /* ppocr_keys_ocrv5.txt in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111012 /* ppocr_keys_ocrv5.txt */; };
+		11111111111111111111110F /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111111111111111111111013 /* opencv2.framework */; };
+		111111111111111111111110 /* PP-LCNet_x0_25_textline_ori.nb in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111014 /* PP-LCNet_x0_25_textline_ori.nb */; };
+		111111111111111111111111 /* config.txt in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111015 /* config.txt */; };
+		111111111111111111111112 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111016 /* clipper.cpp */; };
+		111111111111111111111113 /* cls_process.cc in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111018 /* cls_process.cc */; };
+		111111111111111111111114 /* db_post_process.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111101A /* db_post_process.cc */; };
+		111111111111111111111115 /* det_process.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111101C /* det_process.cc */; };
+		111111111111111111111116 /* pipeline.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111101E /* pipeline.cc */; };
+		111111111111111111111117 /* rec_process.cc in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111020 /* rec_process.cc */; };
+		111111111111111111111118 /* utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111022 /* utils.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +52,24 @@
 		111111111111111111111010 /* PP-OCRv5_mobile_det.nb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PP-OCRv5_mobile_det.nb"; path = Lectigo/Models/PaddleOCRv5/PP-OCRv5_mobile_det.nb; sourceTree = SOURCE_ROOT; };
 		111111111111111111111011 /* PP-OCRv5_mobile_rec.nb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PP-OCRv5_mobile_rec.nb"; path = Lectigo/Models/PaddleOCRv5/PP-OCRv5_mobile_rec.nb; sourceTree = SOURCE_ROOT; };
 		111111111111111111111012 /* ppocr_keys_ocrv5.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = ppocr_keys_ocrv5.txt; path = Lectigo/Models/PaddleOCRv5/ppocr_keys_ocrv5.txt; sourceTree = SOURCE_ROOT; };
+		111111111111111111111013 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ThirdParty/OpenCV/opencv2.framework; sourceTree = SOURCE_ROOT; };
+		111111111111111111111014 /* PP-LCNet_x0_25_textline_ori.nb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PP-LCNet_x0_25_textline_ori.nb"; path = Lectigo/Models/PaddleOCRv5/PP-LCNet_x0_25_textline_ori.nb; sourceTree = SOURCE_ROOT; };
+		111111111111111111111015 /* config.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = config.txt; path = Lectigo/Models/PaddleOCRv5/config.txt; sourceTree = SOURCE_ROOT; };
+		111111111111111111111016 /* clipper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = clipper.cpp; sourceTree = "<group>"; };
+		111111111111111111111017 /* clipper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = clipper.hpp; sourceTree = "<group>"; };
+		111111111111111111111018 /* cls_process.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cls_process.cc; sourceTree = "<group>"; };
+		111111111111111111111019 /* cls_process.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cls_process.h; sourceTree = "<group>"; };
+		11111111111111111111101A /* db_post_process.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = db_post_process.cc; sourceTree = "<group>"; };
+		11111111111111111111101B /* db_post_process.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = db_post_process.h; sourceTree = "<group>"; };
+		11111111111111111111101C /* det_process.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = det_process.cc; sourceTree = "<group>"; };
+		11111111111111111111101D /* det_process.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = det_process.h; sourceTree = "<group>"; };
+		11111111111111111111101E /* pipeline.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pipeline.cc; sourceTree = "<group>"; };
+		11111111111111111111101F /* pipeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pipeline.h; sourceTree = "<group>"; };
+		111111111111111111111020 /* rec_process.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rec_process.cc; sourceTree = "<group>"; };
+		111111111111111111111021 /* rec_process.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rec_process.h; sourceTree = "<group>"; };
+		111111111111111111111022 /* utils.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utils.cc; sourceTree = "<group>"; };
+		111111111111111111111023 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		111111111111111111111024 /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +78,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11111111111111111111110B /* libpaddle_api_light_bundled.a in Frameworks */,
+				11111111111111111111110F /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +121,7 @@
 				111111111111111111111306 /* OCR */,
 				111111111111111111111307 /* Speech */,
 				111111111111111111111308 /* Native */,
+				11111111111111111111130D /* PaddleOCRCore */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -138,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				11111111111111111111130C /* PaddleLite */,
+				11111111111111111111130E /* OpenCV */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";
@@ -153,8 +184,10 @@
 		11111111111111111111130B /* PaddleOCRv5 */ = {
 			isa = PBXGroup;
 			children = (
+				111111111111111111111014 /* PP-LCNet_x0_25_textline_ori.nb */,
 				111111111111111111111010 /* PP-OCRv5_mobile_det.nb */,
 				111111111111111111111011 /* PP-OCRv5_mobile_rec.nb */,
+				111111111111111111111015 /* config.txt */,
 				111111111111111111111012 /* ppocr_keys_ocrv5.txt */,
 			);
 			path = PaddleOCRv5;
@@ -166,6 +199,36 @@
 				11111111111111111111100F /* libpaddle_api_light_bundled.a */,
 			);
 			path = PaddleLite;
+			sourceTree = "<group>";
+		};
+		11111111111111111111130D /* PaddleOCRCore */ = {
+			isa = PBXGroup;
+			children = (
+				111111111111111111111016 /* clipper.cpp */,
+				111111111111111111111017 /* clipper.hpp */,
+				111111111111111111111018 /* cls_process.cc */,
+				111111111111111111111019 /* cls_process.h */,
+				11111111111111111111101A /* db_post_process.cc */,
+				11111111111111111111101B /* db_post_process.h */,
+				11111111111111111111101C /* det_process.cc */,
+				11111111111111111111101D /* det_process.h */,
+				11111111111111111111101E /* pipeline.cc */,
+				11111111111111111111101F /* pipeline.h */,
+				111111111111111111111020 /* rec_process.cc */,
+				111111111111111111111021 /* rec_process.h */,
+				111111111111111111111024 /* timer.h */,
+				111111111111111111111022 /* utils.cc */,
+				111111111111111111111023 /* utils.h */,
+			);
+			path = PaddleOCRCore;
+			sourceTree = "<group>";
+		};
+		11111111111111111111130E /* OpenCV */ = {
+			isa = PBXGroup;
+			children = (
+				111111111111111111111013 /* opencv2.framework */,
+			);
+			path = OpenCV;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,8 +289,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				111111111111111111111110 /* PP-LCNet_x0_25_textline_ori.nb in Resources */,
 				11111111111111111111110C /* PP-OCRv5_mobile_det.nb in Resources */,
 				11111111111111111111110D /* PP-OCRv5_mobile_rec.nb in Resources */,
+				111111111111111111111111 /* config.txt in Resources */,
 				11111111111111111111110E /* ppocr_keys_ocrv5.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,6 +314,13 @@
 				111111111111111111111108 /* PaddleOCRBridge.mm in Sources */,
 				111111111111111111111109 /* FallbackCaptionRecognizer.swift in Sources */,
 				11111111111111111111110A /* VisionCaptionRecognizer.swift in Sources */,
+				111111111111111111111112 /* clipper.cpp in Sources */,
+				111111111111111111111113 /* cls_process.cc in Sources */,
+				111111111111111111111114 /* db_post_process.cc in Sources */,
+				111111111111111111111115 /* det_process.cc in Sources */,
+				111111111111111111111116 /* pipeline.cc in Sources */,
+				111111111111111111111117 /* rec_process.cc in Sources */,
+				111111111111111111111118 /* utils.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,7 +475,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/Lectigo/Sources/PaddleOCRCore",
+					"$(PROJECT_DIR)/ThirdParty/OpenCV/opencv2.framework/Headers",
 					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/include",
+				);
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ThirdParty/OpenCV",
 				);
 				SWIFT_OBJC_BRIDGING_HEADER = "Lectigo/Sources/Native/Lectigo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -441,7 +519,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/Lectigo/Sources/PaddleOCRCore",
+					"$(PROJECT_DIR)/ThirdParty/OpenCV/opencv2.framework/Headers",
 					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/include",
+				);
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ThirdParty/OpenCV",
 				);
 				SWIFT_OBJC_BRIDGING_HEADER = "Lectigo/Sources/Native/Lectigo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

@@ -18,6 +18,15 @@ jobs:
       - name: Show Xcode version
         run: xcodebuild -version
 
+      - name: Download OpenCV iOS framework
+        run: |
+          set -euo pipefail
+          mkdir -p ThirdParty/OpenCV
+          curl -L "https://paddlelite-demo.bj.bcebos.com/libs/ios/opencv2.framework.tar.gz" -o ThirdParty/OpenCV/opencv2.framework.tar.gz
+          tar -xzf ThirdParty/OpenCV/opencv2.framework.tar.gz -C ThirdParty/OpenCV
+          rm -f ThirdParty/OpenCV/opencv2.framework.tar.gz
+          find ThirdParty/OpenCV -name '._*' -delete
+
       - name: Build app without code signing
         run: |
           set -euo pipefail

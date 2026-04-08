@@ -11,9 +11,12 @@ final class FallbackCaptionRecognizer: CaptionOCRRecognizing {
 
     func recognizeCaption(in image: UIImage) async throws -> String {
         do {
-            return try await primary.recognizeCaption(in: image)
+            let text = try await primary.recognizeCaption(in: image)
+            if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return text
+            }
         } catch {
-            return try await fallback.recognizeCaption(in: image)
         }
+        return try await fallback.recognizeCaption(in: image)
     }
 }
