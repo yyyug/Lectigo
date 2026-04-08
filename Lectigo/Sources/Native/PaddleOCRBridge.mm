@@ -1,5 +1,5 @@
 #import "PaddleOCRBridge.h"
-#import <opencv2/imgcodecs/ios.h>
+#import <opencv2/highgui/ios.h>
 #include "pipeline.h"
 #import "paddle_api.h"
 #import "paddle_use_kernels.h"
