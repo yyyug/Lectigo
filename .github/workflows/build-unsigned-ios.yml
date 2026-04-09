@@ -18,7 +18,15 @@ jobs:
       - name: Show Xcode version
         run: xcodebuild -version
 
+      - name: Cache OpenCV iOS framework
+        id: cache-opencv
+        uses: actions/cache@v4
+        with:
+          path: ThirdParty/OpenCV/opencv2.framework
+          key: ${{ runner.os }}-opencv-ios-4.5.5-paddle-demo
+
       - name: Download OpenCV iOS framework
+        if: steps.cache-opencv.outputs.cache-hit != 'true'
         run: |
           set -euo pipefail
           mkdir -p ThirdParty/OpenCV
