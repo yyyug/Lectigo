@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build unsigned IPA
@@ -69,3 +72,22 @@ jobs:
           name: Lectigo-unsigned-ipa
           path: Lectigo-unsigned.ipa
           if-no-files-found: error
+
+      - name: Publish unsigned IPA release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TAG_NAME="latest-unsigned-ipa"
+          RELEASE_TITLE="Latest unsigned IPA"
+          RELEASE_NOTES="Automated unsigned IPA build from ${GITHUB_SHA}."
+
+          git tag -f "$TAG_NAME" "$GITHUB_SHA"
+          git push origin "refs/tags/$TAG_NAME" --force
+
+          if gh release view "$TAG_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$TAG_NAME" Lectigo-unsigned.ipa --repo "$GITHUB_REPOSITORY" --clobber
+            gh release edit "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --title "$RELEASE_TITLE" --notes "$RELEASE_NOTES"
+          else
+            gh release create "$TAG_NAME" Lectigo-unsigned.ipa --repo "$GITHUB_REPOSITORY" --title "$RELEASE_TITLE" --notes "$RELEASE_NOTES"
+          fi
