@@ -9,10 +9,7 @@ struct ContentView: View {
 
     @StateObject private var webViewStore = WebViewStore()
     @StateObject private var monitor = VideoCaptionMonitor(
-        recognizer: FallbackCaptionRecognizer(
-            primary: PaddleOCRCaptionRecognizer(),
-            fallback: VisionCaptionRecognizer()
-        ),
+        recognizer: PaddleOCRCaptionRecognizer(),
         announcer: SpeechAnnouncer()
     )
 

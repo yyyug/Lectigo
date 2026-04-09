@@ -1,6 +1,6 @@
 # Lectigo
 
-Lectigo is an iOS SwiftUI prototype that opens YouTube in a `WKWebView`, captures the caption area once per second while the page video is playing, sends the image to a PaddleOCR v5 bridge, and announces newly recognized text with `AVSpeechSynthesizer`.
+Lectigo is an iOS SwiftUI prototype that opens YouTube in a `WKWebView`, captures the caption area while the page video is playing, sends the image to a PaddleOCR v5 bridge, and announces newly recognized text through VoiceOver accessibility announcements.
 
 ## Current State
 
@@ -8,7 +8,7 @@ The app shell, web view capture loop, OCR pipeline boundary, speech output, and 
 
 The repository includes the official Paddle Lite iOS arm64 runtime in `ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8`, the PP-OCRv5 detector/recognizer/classifier `.nb` model assets, the OCR dictionary, config file, and the native Paddle OCR C++ pipeline adapted from the official iOS demo.
 
-`Lectigo/Sources/Native/PaddleOCRBridge.mm` now converts each `UIImage` snapshot to an OpenCV matrix, runs the real Paddle OCR detector/classifier/recognizer pipeline, and returns recognized caption text to Swift. If Paddle returns no text or fails on a frame, the app falls back to Apple's on-device Vision OCR.
+`Lectigo/Sources/Native/PaddleOCRBridge.mm` now converts each `UIImage` snapshot to an OpenCV matrix, runs the Paddle OCR detector/classifier/recognizer pipeline, and returns recognized caption text to Swift. The app is configured to use Paddle OCR only.
 
 ## GitHub Actions Build
 
