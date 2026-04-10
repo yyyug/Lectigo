@@ -6,7 +6,6 @@ struct CaptureSettings {
     var cropLeftPercent: Double = 0
     var cropRightPercent: Double = 0
     var captureInterval: Double = 0.5
-    var announcementSimilarityPercent: Double = 80
 
     mutating func sanitize() {
         cropTopPercent = Self.clampedPercent(cropTopPercent)
@@ -14,7 +13,6 @@ struct CaptureSettings {
         cropLeftPercent = Self.clampedPercent(cropLeftPercent)
         cropRightPercent = Self.clampedPercent(cropRightPercent)
         captureInterval = min(max(captureInterval, 0.1), 10.0)
-        announcementSimilarityPercent = Self.clampedPercent(announcementSimilarityPercent)
 
         if cropTopPercent + cropBottomPercent >= 100 {
             cropBottomPercent = max(0, 99 - cropTopPercent)
