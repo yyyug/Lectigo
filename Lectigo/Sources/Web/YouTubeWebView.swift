@@ -68,7 +68,7 @@ final class WebViewStore: NSObject, ObservableObject, WKNavigationDelegate {
     })();
     """#
 
-    init() {
+    override init() {
         let configuration = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
         configuration.allowsInlineMediaPlayback = true
