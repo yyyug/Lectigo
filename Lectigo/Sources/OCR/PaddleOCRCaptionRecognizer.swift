@@ -6,16 +6,8 @@ final class PaddleOCRCaptionRecognizer: CaptionOCRRecognizing {
             DispatchQueue.global(qos: .userInitiated).async {
                 autoreleasepool {
                     do {
-                        let prepared = try PaddleOCRBridge.prepare()
-                        if prepared {
-                            continuation.resume(returning: ())
-                        } else {
-                            continuation.resume(throwing: NSError(
-                                domain: "Lectigo.PaddleOCRCaptionRecognizer",
-                                code: 1,
-                                userInfo: [NSLocalizedDescriptionKey: "Paddle OCR initialization failed."]
-                            ))
-                        }
+                        try PaddleOCRBridge.prepare()
+                        continuation.resume(returning: ())
                     } catch {
                         continuation.resume(throwing: error)
                     }
