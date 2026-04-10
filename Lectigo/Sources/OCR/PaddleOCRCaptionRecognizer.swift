@@ -2,11 +2,11 @@ import UIKit
 
 final class PaddleOCRCaptionRecognizer: CaptionOCRRecognizing {
     func prepare() async throws {
-        try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             DispatchQueue.global(qos: .userInitiated).async {
                 autoreleasepool {
                     var error: NSError?
-                    let prepared = PaddleOCRBridge.prepare(&error)
+                    let prepared = PaddleOCRBridge.prepareWithError(&error)
                     if let error {
                         continuation.resume(throwing: error)
                     } else if prepared {
