@@ -28,7 +28,7 @@ final class VideoCaptionMonitor: ObservableObject {
         guard !isRunning else { return }
         settings.sanitize()
         isRunning = true
-        statusText = "Watching video captions"
+        statusText = "Watching captions"
         timer = Timer.scheduledTimer(withTimeInterval: settings.captureInterval, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 await self?.processFrameIfNeeded()
@@ -62,11 +62,6 @@ final class VideoCaptionMonitor: ObservableObject {
         isProcessingFrame = true
         defer { isProcessingFrame = false }
 
-        guard await isVideoPlaying(in: webView) else {
-            statusText = "Video is not playing"
-            return
-        }
-
         do {
             let snapshot = try await takeCaptionSnapshot(from: webView)
             let recognizedText = try await recognizer.recognizeCaption(in: snapshot)
@@ -84,20 +79,6 @@ final class VideoCaptionMonitor: ObservableObject {
             }
         } catch {
             statusText = error.localizedDescription
-        }
-    }
-
-    private func isVideoPlaying(in webView: WKWebView) async -> Bool {
-        await withCheckedContinuation { continuation in
-            let script = """
-            (() => {
-              const video = document.querySelector('video');
-              return !!video && !video.paused && !video.ended && video.readyState > 2;
-            })();
-            """
-            webView.evaluateJavaScript(script) { result, _ in
-                continuation.resume(returning: (result as? Bool) == true)
-            }
         }
     }
 
