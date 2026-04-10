@@ -42,6 +42,7 @@ final class VideoCaptionMonitor: ObservableObject {
         timer = nil
         isRunning = false
         isProcessingFrame = false
+        lastRecognizedText = ""
         statusText = "OCR stopped"
         announcer.stop()
     }
@@ -111,7 +112,13 @@ final class VideoCaptionMonitor: ObservableObject {
     }
 
     private func shouldSpeak(_ text: String) -> Bool {
-        normalized(text) != normalized(lastSpokenText)
+        let current = normalized(text)
+        let previous = normalized(lastSpokenText)
+
+        guard !current.isEmpty else { return false }
+        guard !previous.isEmpty else { return true }
+
+        return similarityPercent(between: current, and: previous) < settings.announcementSimilarityPercent
     }
 
     private func normalized(_ text: String) -> String {
@@ -119,6 +126,30 @@ final class VideoCaptionMonitor: ObservableObject {
             .lowercased()
             .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
             .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private func similarityPercent(between lhs: String, and rhs: String) -> Double {
+        let lhsChars = Array(lhs)
+        let rhsChars = Array(rhs)
+        let maxLength = max(lhsChars.count, rhsChars.count)
+        guard maxLength > 0 else { return 100 }
+
+        var previous = Array(0...rhsChars.count)
+        for (lhsIndex, lhsChar) in lhsChars.enumerated() {
+            var current = [lhsIndex + 1] + Array(repeating: 0, count: rhsChars.count)
+            for (rhsIndex, rhsChar) in rhsChars.enumerated() {
+                let cost = lhsChar == rhsChar ? 0 : 1
+                current[rhsIndex + 1] = min(
+                    previous[rhsIndex + 1] + 1,
+                    current[rhsIndex] + 1,
+                    previous[rhsIndex] + cost
+                )
+            }
+            previous = current
+        }
+
+        let distance = previous[rhsChars.count]
+        return (1 - (Double(distance) / Double(maxLength))) * 100
     }
 }
 
