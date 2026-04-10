@@ -14,6 +14,7 @@ final class VideoCaptionMonitor: ObservableObject {
     private var timer: Timer?
     private var isProcessingFrame = false
     private var lastSpokenText = ""
+    private var runToken = 0
 
     init(recognizer: CaptionOCRRecognizing, announcer: SpeechAnnouncer) {
         self.recognizer = recognizer
@@ -27,8 +28,9 @@ final class VideoCaptionMonitor: ObservableObject {
     func start() {
         guard !isRunning else { return }
         settings.sanitize()
+        runToken += 1
         isRunning = true
-        statusText = "Watching video captions"
+        statusText = announcer.isVoiceOverEnabled ? "Watching video captions" : "VoiceOver is off"
         timer = Timer.scheduledTimer(withTimeInterval: settings.captureInterval, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 await self?.processFrameIfNeeded()
@@ -38,6 +40,7 @@ final class VideoCaptionMonitor: ObservableObject {
     }
 
     func stop() {
+        runToken += 1
         timer?.invalidate()
         timer = nil
         isRunning = false
@@ -59,30 +62,35 @@ final class VideoCaptionMonitor: ObservableObject {
 
     private func processFrameIfNeeded() async {
         guard isRunning, !isProcessingFrame, let webView else { return }
+        let currentRunToken = runToken
         isProcessingFrame = true
         defer { isProcessingFrame = false }
 
         guard await isVideoPlaying(in: webView) else {
+            guard isRunning, runToken == currentRunToken else { return }
             statusText = "Video is not playing"
             return
         }
 
         do {
             let snapshot = try await takeCaptionSnapshot(from: webView)
+            guard isRunning, runToken == currentRunToken else { return }
             let recognizedText = try await recognizer.recognizeCaption(in: snapshot)
+            guard isRunning, runToken == currentRunToken else { return }
             guard !recognizedText.isEmpty else {
                 statusText = "No caption text detected"
                 return
             }
 
             lastRecognizedText = recognizedText
-            statusText = "Caption recognized"
+            statusText = announcer.isVoiceOverEnabled ? "Caption recognized" : "Caption recognized, VoiceOver is off"
 
             if shouldSpeak(recognizedText) {
                 lastSpokenText = recognizedText
                 announcer.speak(recognizedText)
             }
         } catch {
+            guard isRunning, runToken == currentRunToken else { return }
             statusText = error.localizedDescription
         }
     }
@@ -130,7 +138,13 @@ final class VideoCaptionMonitor: ObservableObject {
     }
 
     private func shouldSpeak(_ text: String) -> Bool {
-        normalized(text) != normalized(lastSpokenText)
+        let current = normalized(text)
+        let previous = normalized(lastSpokenText)
+
+        guard !current.isEmpty else { return false }
+        guard !previous.isEmpty else { return true }
+
+        return similarityPercent(between: current, and: previous) < settings.announcementSimilarityPercent
     }
 
     private func normalized(_ text: String) -> String {
@@ -138,6 +152,30 @@ final class VideoCaptionMonitor: ObservableObject {
             .lowercased()
             .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
             .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private func similarityPercent(between lhs: String, and rhs: String) -> Double {
+        let lhsChars = Array(lhs)
+        let rhsChars = Array(rhs)
+        let maxLength = max(lhsChars.count, rhsChars.count)
+        guard maxLength > 0 else { return 100 }
+
+        var previous = Array(0...rhsChars.count)
+        for (lhsIndex, lhsChar) in lhsChars.enumerated() {
+            var current = [lhsIndex + 1] + Array(repeating: 0, count: rhsChars.count)
+            for (rhsIndex, rhsChar) in rhsChars.enumerated() {
+                let cost = lhsChar == rhsChar ? 0 : 1
+                current[rhsIndex + 1] = min(
+                    previous[rhsIndex + 1] + 1,
+                    current[rhsIndex] + 1,
+                    previous[rhsIndex] + cost
+                )
+            }
+            previous = current
+        }
+
+        let distance = previous[rhsChars.count]
+        return (1 - (Double(distance) / Double(maxLength))) * 100
     }
 }
 

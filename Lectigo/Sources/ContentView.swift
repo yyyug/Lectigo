@@ -6,6 +6,7 @@ struct ContentView: View {
     @AppStorage("capture.crop.left.percent") private var cropLeftPercent = 0.0
     @AppStorage("capture.crop.right.percent") private var cropRightPercent = 0.0
     @AppStorage("capture.interval.seconds") private var captureInterval = 0.5
+    @AppStorage("announcement.similarity.percent") private var announcementSimilarityPercent = 80.0
 
     @StateObject private var webViewStore = WebViewStore()
     @StateObject private var monitor = VideoCaptionMonitor(
@@ -57,6 +58,9 @@ struct ContentView: View {
         .sheet(isPresented: $showingSettings) {
             settingsView
                 .presentationDetents([.medium, .large])
+        }
+        .onChange(of: webViewStore.playbackState) { newState in
+            handlePlaybackStateChange(newState)
         }
     }
 
@@ -110,7 +114,8 @@ struct ContentView: View {
             cropBottomPercent: cropBottomPercent,
             cropLeftPercent: cropLeftPercent,
             cropRightPercent: cropRightPercent,
-            captureInterval: captureInterval
+            captureInterval: captureInterval,
+            announcementSimilarityPercent: announcementSimilarityPercent
         )
         settings.sanitize()
         cropTopPercent = settings.cropTopPercent
@@ -118,6 +123,7 @@ struct ContentView: View {
         cropLeftPercent = settings.cropLeftPercent
         cropRightPercent = settings.cropRightPercent
         captureInterval = settings.captureInterval
+        announcementSimilarityPercent = settings.announcementSimilarityPercent
         monitor.updateSettings(settings)
     }
 
@@ -132,6 +138,7 @@ struct ContentView: View {
                 await MainActor.run {
                     isOCRReady = true
                     isPreparingOCR = false
+                    handlePlaybackStateChange(webViewStore.playbackState)
                 }
             } catch {
                 await MainActor.run {
@@ -140,6 +147,17 @@ struct ContentView: View {
                     ocrPreparationError = error.localizedDescription
                 }
             }
+        }
+    }
+
+    private func handlePlaybackStateChange(_ state: WebViewStore.PlaybackState) {
+        guard isOCRReady else { return }
+
+        switch state {
+        case .playing:
+            monitor.start()
+        case .idle, .paused:
+            monitor.stop()
         }
     }
 
@@ -176,6 +194,17 @@ struct ContentView: View {
                     )
 
                     Text("0.5 captures and recognizes twice per second.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
+                Section("Announcement") {
+                    percentageField(
+                        title: "Similarity Threshold (%)",
+                        value: $announcementSimilarityPercent
+                    )
+
+                    Text("If the new text is 80% similar or more to the previous announcement, it will not be announced again. Users can change this value.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
