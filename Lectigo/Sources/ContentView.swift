@@ -15,6 +15,9 @@ struct ContentView: View {
 
     @State private var addressText = "https://m.youtube.com/"
     @State private var showingSettings = false
+    @State private var isPreparingOCR = false
+    @State private var isOCRReady = false
+    @State private var ocrPreparationError = ""
 
     var body: some View {
         VStack(spacing: 0) {
@@ -46,6 +49,7 @@ struct ContentView: View {
             openAddress()
             monitor.attach(webView: webViewStore.webView)
             applyCaptureSettings()
+            prepareOCRIfNeeded()
         }
         .onDisappear {
             monitor.stop()
@@ -63,11 +67,23 @@ struct ContentView: View {
                     monitor.isRunning ? monitor.stop() : monitor.start()
                 }
                 .buttonStyle(.borderedProminent)
+                .disabled(!monitor.isRunning && !isOCRReady)
 
                 Text(monitor.statusText)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
+            }
+
+            if isPreparingOCR {
+                Text("Initializing Paddle OCR")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            } else if !ocrPreparationError.isEmpty {
+                Text(ocrPreparationError)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+                    .lineLimit(3)
             }
 
             if !monitor.lastRecognizedText.isEmpty {
@@ -103,6 +119,28 @@ struct ContentView: View {
         cropRightPercent = settings.cropRightPercent
         captureInterval = settings.captureInterval
         monitor.updateSettings(settings)
+    }
+
+    private func prepareOCRIfNeeded() {
+        guard !isPreparingOCR, !isOCRReady else { return }
+        isPreparingOCR = true
+        ocrPreparationError = ""
+
+        Task {
+            do {
+                try await PaddleOCRCaptionRecognizer().prepare()
+                await MainActor.run {
+                    isOCRReady = true
+                    isPreparingOCR = false
+                }
+            } catch {
+                await MainActor.run {
+                    isOCRReady = false
+                    isPreparingOCR = false
+                    ocrPreparationError = error.localizedDescription
+                }
+            }
+        }
     }
 
     private var settingsView: some View {

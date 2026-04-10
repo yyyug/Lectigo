@@ -4,6 +4,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PaddleOCRBridge : NSObject
++ (BOOL)prepareWithError:(NSError * _Nullable * _Nullable)error;
 + (NSString *)recognizeTextInImage:(UIImage *)image error:(NSError * _Nullable * _Nullable)error;
 @end
 

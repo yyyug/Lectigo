@@ -93,6 +93,10 @@ cv::Mat PrepareMatFromUIImage(UIImage *image) {
 
 @implementation PaddleOCRBridge
 
++ (BOOL)prepareWithError:(NSError * _Nullable * _Nullable)error {
+    return SharedPipeline(error) != nullptr;
+}
+
 + (NSString *)recognizeTextInImage:(UIImage *)image error:(NSError * _Nullable * _Nullable)error {
     NSBundle *bundle = NSBundle.mainBundle;
     BOOL hasDet = [bundle pathForResource:@"PP-OCRv5_mobile_det" ofType:@"nb"] != nil;
