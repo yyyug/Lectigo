@@ -13,7 +13,7 @@ struct ContentView: View {
         announcer: SpeechAnnouncer()
     )
 
-    @State private var addressText = "https://m.youtube.com/"
+    @State private var addressText = "https://www.youtube.com/"
     @State private var showingSettings = false
     @State private var isPreparingOCR = false
     @State private var isOCRReady = false
