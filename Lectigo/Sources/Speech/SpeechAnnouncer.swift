@@ -1,22 +1,15 @@
-import AVFoundation
+import UIKit
 
 final class SpeechAnnouncer {
-    private let synthesizer = AVSpeechSynthesizer()
+    var isVoiceOverEnabled: Bool {
+        UIAccessibility.isVoiceOverRunning
+    }
 
     func speak(_ text: String) {
-        guard !text.isEmpty else { return }
-
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
-
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
-        utterance.pitchMultiplier = 1.0
-        synthesizer.speak(utterance)
+        guard !text.isEmpty, UIAccessibility.isVoiceOverRunning else { return }
+        UIAccessibility.post(notification: .announcement, argument: text)
     }
 
     func stop() {
-        synthesizer.stopSpeaking(at: .immediate)
     }
 }

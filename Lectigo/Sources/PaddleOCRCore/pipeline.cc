@@ -20,6 +20,10 @@
 
 cv::Mat GetRotateCropImage(cv::Mat srcimage,
                            std::vector<std::vector<int>> box) {
+  if (srcimage.empty() || box.size() != 4) {
+    return cv::Mat();
+  }
+
   cv::Mat image;
   srcimage.copyTo(image);
   std::vector<std::vector<int>> points = box;
@@ -31,8 +35,20 @@ cv::Mat GetRotateCropImage(cv::Mat srcimage,
   int top = int(*std::min_element(y_collect, y_collect + 4));    // NOLINT
   int bottom = int(*std::max_element(y_collect, y_collect + 4)); // NOLINT
 
+  left = std::max(0, std::min(left, image.cols));
+  right = std::max(0, std::min(right, image.cols));
+  top = std::max(0, std::min(top, image.rows));
+  bottom = std::max(0, std::min(bottom, image.rows));
+
+  if (right <= left || bottom <= top) {
+    return cv::Mat();
+  }
+
   cv::Mat img_crop;
   image(cv::Rect(left, top, right - left, bottom - top)).copyTo(img_crop);
+  if (img_crop.empty()) {
+    return cv::Mat();
+  }
 
   for (int i = 0; i < points.size(); i++) {
     points[i][0] -= left;
@@ -45,6 +61,10 @@ cv::Mat GetRotateCropImage(cv::Mat srcimage,
   int img_crop_height =
       static_cast<int>(sqrt(pow(points[0][0] - points[3][0], 2) +
                             pow(points[0][1] - points[3][1], 2)));
+
+  if (img_crop_width <= 0 || img_crop_height <= 0) {
+    return cv::Mat();
+  }
 
   cv::Point2f pts_std[4];
   pts_std[0] = cv::Point2f(0., 0.);
@@ -64,6 +84,9 @@ cv::Mat GetRotateCropImage(cv::Mat srcimage,
   cv::warpPerspective(img_crop, dst_img, M,
                       cv::Size(img_crop_width, img_crop_height),
                       cv::BORDER_REPLICATE);
+  if (dst_img.empty()) {
+    return cv::Mat();
+  }
 
   const float ratio = 1.5;
   if (static_cast<float>(dst_img.rows) >=
@@ -190,9 +213,15 @@ cv::Mat Pipeline::Process(cv::Mat img, std::string output_img_path,
   std::vector<float> rec_text_score;
   for (int i = boxes.size() - 1; i >= 0; i--) {
     crop_img = GetRotateCropImage(img_copy, boxes[i]);
+    if (crop_img.empty()) {
+      continue;
+    }
     if (use_direction_classify >= 1) {
       crop_img =
           clsPredictor_->Predict(crop_img, nullptr, nullptr, nullptr, 0.9);
+      if (crop_img.empty()) {
+        continue;
+      }
     }
     auto res = recPredictor_->Predict(crop_img, nullptr, nullptr, nullptr,
                                       charactor_dict_);
