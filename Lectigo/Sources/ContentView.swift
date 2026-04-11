@@ -420,9 +420,9 @@ final class VideoLibraryStore: ObservableObject {
                 from: sourceURL,
                 itemID: itemID,
                 destinationDirectory: destinationDirectory,
-                progress: { [weak self] text in
+                progress: { [itemID] text in
                     await MainActor.run {
-                        guard let self, let itemIndex = self.items.firstIndex(where: { $0.id == itemID }) else { return }
+                        guard let itemIndex = self.items.firstIndex(where: { $0.id == itemID }) else { return }
                         self.items[itemIndex].progressText = text
                         self.persist()
                     }
@@ -494,7 +494,7 @@ private enum VideoLibraryPaths {
     }
 }
 
-private struct VideoLibraryItem: Identifiable, Codable, Hashable {
+struct VideoLibraryItem: Identifiable, Codable, Hashable {
     let id: UUID
     var sourceURLString: String?
     var title: String
@@ -723,8 +723,10 @@ final class LocalPlaybackOCRController: ObservableObject {
             object: item,
             queue: .main
         ) { [weak self] _ in
-            self?.stopFrameTimer()
-            self?.statusText = "Playback ended"
+            Task { @MainActor in
+                self?.stopFrameTimer()
+                self?.statusText = "Playback ended"
+            }
         }
     }
 
