@@ -341,7 +341,7 @@ private struct SettingsTabView: View {
                     if let authMessage = sessionStore.authMessage {
                         Text(authMessage)
                             .font(.caption)
-                            .foregroundStyle(sessionStore.isAuthenticated ? .secondary : .red)
+                            .foregroundColor(sessionStore.isAuthenticated ? .secondary : .red)
                     }
                 }
                 .padding(.vertical, 4)
