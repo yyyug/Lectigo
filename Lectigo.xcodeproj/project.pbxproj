@@ -32,6 +32,8 @@
 		111111111111111111111117 /* rec_process.cc in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111020 /* rec_process.cc */; };
 		111111111111111111111118 /* utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111022 /* utils.cc */; };
 		111111111111111111111119 /* CaptureSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111025 /* CaptureSettings.swift */; };
+		11111111111111111111111A /* ToolRunnerBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111027 /* ToolRunnerBridge.mm */; };
+		11111111111111111111111B /* EmbeddedTools in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111028 /* EmbeddedTools */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +74,9 @@
 		111111111111111111111023 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		111111111111111111111024 /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
 		111111111111111111111025 /* CaptureSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSettings.swift; sourceTree = "<group>"; };
+		111111111111111111111026 /* ToolRunnerBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToolRunnerBridge.h; sourceTree = "<group>"; };
+		111111111111111111111027 /* ToolRunnerBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ToolRunnerBridge.mm; sourceTree = "<group>"; };
+		111111111111111111111028 /* EmbeddedTools */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EmbeddedTools; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +106,7 @@
 			children = (
 				111111111111111111111304 /* Sources */,
 				11111111111111111111130A /* Models */,
+				111111111111111111111028 /* EmbeddedTools */,
 				11111111111111111111100B /* Info.plist */,
 			);
 			path = Lectigo;
@@ -162,6 +168,8 @@
 			children = (
 				111111111111111111111009 /* PaddleOCRBridge.h */,
 				111111111111111111111008 /* PaddleOCRBridge.mm */,
+				111111111111111111111026 /* ToolRunnerBridge.h */,
+				111111111111111111111027 /* ToolRunnerBridge.mm */,
 				11111111111111111111100A /* Lectigo-Bridging-Header.h */,
 			);
 			path = Native;
@@ -295,6 +303,7 @@
 				111111111111111111111110 /* PP-LCNet_x0_25_textline_ori.nb in Resources */,
 				11111111111111111111110C /* PP-OCRv5_mobile_det.nb in Resources */,
 				11111111111111111111110D /* PP-OCRv5_mobile_rec.nb in Resources */,
+				11111111111111111111111B /* EmbeddedTools in Resources */,
 				111111111111111111111111 /* config.txt in Resources */,
 				11111111111111111111110E /* ppocr_keys_ocrv5.txt in Resources */,
 			);
@@ -316,6 +325,7 @@
 				111111111111111111111106 /* VideoCaptionMonitor.swift in Sources */,
 				111111111111111111111107 /* SpeechAnnouncer.swift in Sources */,
 				111111111111111111111108 /* PaddleOCRBridge.mm in Sources */,
+				11111111111111111111111A /* ToolRunnerBridge.mm in Sources */,
 				111111111111111111111109 /* FallbackCaptionRecognizer.swift in Sources */,
 				11111111111111111111110A /* VisionCaptionRecognizer.swift in Sources */,
 				111111111111111111111112 /* clipper.cpp in Sources */,
