@@ -302,7 +302,7 @@ private struct SettingsTabView: View {
     var body: some View {
         NavigationStack {
             Form {
-                SwiftUI.Section {
+                Group {
                     Text("Backend")
                         .font(.headline)
 
