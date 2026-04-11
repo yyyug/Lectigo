@@ -1,10 +1,3 @@
-Place the on-device downloader toolchain here before building a sideloaded app bundle.
+Legacy placeholder from the earlier on-device downloader experiment.
 
-Expected bundle contents:
-- `python3` or `python`
-- `yt-dlp` or `yt-dlp.pyz`
-- `ffmpeg`
-
-The native downloader bridge scans the app bundle recursively for those filenames.
-
-This repository does not include those executables. They must be added separately for private distribution if you want Browse -> Download to work on-device.
+The active app flow now uses the server-backed `backend/` service instead of trying to run `yt-dlp` inside the iOS app.

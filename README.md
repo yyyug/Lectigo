@@ -1,14 +1,30 @@
 # Lectigo
 
-Lectigo is an iOS SwiftUI prototype that opens YouTube in a `WKWebView`, captures the caption area while the page video is playing, sends the image to a PaddleOCR v5 bridge, and announces newly recognized text through VoiceOver accessibility announcements.
+Lectigo is an iOS SwiftUI app that lets users browse YouTube in a `WKWebView`, request a backend download for the current page URL, fetch a temporary MP4 from a server-backed `yt-dlp` service, play the video locally, and run PaddleOCR v5 on local video frames with VoiceOver accessibility announcements.
 
 ## Current State
 
-The app shell, web view capture loop, OCR pipeline boundary, speech output, and a usable on-device Vision OCR fallback are implemented.
+The app now has three tabs:
+
+- `Browse` for YouTube navigation and authenticated download requests
+- `Library` for backend job progress, downloaded local videos, and local playback
+- `Settings` for OCR settings plus backend login and base URL configuration
 
 The repository includes the official Paddle Lite iOS arm64 runtime in `ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8`, the PP-OCRv5 detector/recognizer/classifier `.nb` model assets, the OCR dictionary, config file, and the native Paddle OCR C++ pipeline adapted from the official iOS demo.
 
-`Lectigo/Sources/Native/PaddleOCRBridge.mm` now converts each `UIImage` snapshot to an OpenCV matrix, runs the Paddle OCR detector/classifier/recognizer pipeline, and returns recognized caption text to Swift. The app is configured to use Paddle OCR only.
+`Lectigo/Sources/Native/PaddleOCRBridge.mm` converts each local video frame image to an OpenCV matrix, runs the Paddle OCR detector/classifier/recognizer pipeline, and returns recognized caption text to Swift. The app is configured to use Paddle OCR only.
+
+## Backend
+
+The `backend/` folder contains a FastAPI service that:
+
+- authenticates the app with bearer tokens
+- runs `yt-dlp` plus system `ffmpeg`
+- stores temporary MP4 output files
+- exposes download job polling and file fetch endpoints
+- cleans up expired files
+
+See `backend/README.md` for setup and deployment.
 
 ## GitHub Actions Build
 
@@ -25,4 +41,4 @@ Add these files to the app bundle:
 
 ## YouTube Note
 
-This implementation captures rendered webpage images. Confirm the product and legal constraints before shipping a public app that extracts text from YouTube playback.
+The app still uses a YouTube webpage for browsing, but OCR runs only on locally downloaded playback, not on webpage snapshots. Confirm the product and legal constraints before shipping a public app that downloads and processes YouTube content.
