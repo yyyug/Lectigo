@@ -302,7 +302,7 @@ private struct SettingsTabView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Group {
+                VStack(alignment: .leading, spacing: 12) {
                     Text("Backend")
                         .font(.headline)
 
@@ -344,6 +344,7 @@ private struct SettingsTabView: View {
                             .foregroundStyle(sessionStore.isAuthenticated ? .secondary : .red)
                     }
                 }
+                .padding(.vertical, 4)
 
                 Section("Capture Area") {
                     percentageField(title: "Trim Top (%)", value: $cropTopPercent)
