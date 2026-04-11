@@ -302,7 +302,7 @@ private struct SettingsTabView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Backend") {
+                Section {
                     TextField("Backend Base URL", text: $sessionStore.baseURLString)
                         .textInputAutocapitalization(.never)
                         .keyboardType(.URL)
@@ -340,6 +340,8 @@ private struct SettingsTabView: View {
                             .font(.caption)
                             .foregroundStyle(sessionStore.isAuthenticated ? .secondary : .red)
                     }
+                } header: {
+                    Text("Backend")
                 }
 
                 Section("Capture Area") {
@@ -640,7 +642,9 @@ final class VideoLibraryStore: ObservableObject {
                 itemID: itemID,
                 destinationDirectory: destinationDirectory,
                 progress: { update in
-                    await self.applyProgress(update, for: itemID)
+                    await MainActor.run {
+                        self.applyProgress(update, for: itemID)
+                    }
                 }
             )
 
@@ -911,8 +915,8 @@ private final class BackendVideoDownloadClient {
                 guard let downloadURLString = jobStatus.downloadURL else {
                     throw Error.missingDownloadURL
                 }
-                let downloadURL = try sessionStore.resolveDownloadURL(downloadURLString)
-                let request = try sessionStore.authorizedRequest(url: downloadURL)
+                let downloadURL = try await sessionStore.resolveDownloadURL(downloadURLString)
+                let request = try await sessionStore.authorizedRequest(url: downloadURL)
                 let fileName = sanitizedFileName(
                     from: jobStatus.fileName ?? lastKnownTitle ?? "\(itemID.uuidString).mp4",
                     preferredExtension: "mp4"
@@ -947,17 +951,17 @@ private final class BackendVideoDownloadClient {
     }
 
     private func createRemoteJob(sourceURL: URL) async throws -> BackendCreateDownloadResponse {
-        let endpoint = try sessionStore.url(for: "/downloads")
+        let endpoint = try await sessionStore.url(for: "/downloads")
         let body = try JSONEncoder().encode(BackendCreateDownloadRequest(sourceURL: sourceURL.absoluteString))
-        let request = try sessionStore.authorizedRequest(url: endpoint, method: "POST", jsonBody: body)
+        let request = try await sessionStore.authorizedRequest(url: endpoint, method: "POST", jsonBody: body)
         let (data, response) = try await URLSession.shared.data(for: request)
         try BackendHTTPError.validate(response: response, data: data)
         return try BackendJSON.decoder.decode(BackendCreateDownloadResponse.self, from: data)
     }
 
     private func fetchRemoteJob(jobID: String) async throws -> BackendJobStatusResponse {
-        let endpoint = try sessionStore.url(for: "/downloads/\(jobID)")
-        let request = try sessionStore.authorizedRequest(url: endpoint)
+        let endpoint = try await sessionStore.url(for: "/downloads/\(jobID)")
+        let request = try await sessionStore.authorizedRequest(url: endpoint)
         let (data, response) = try await URLSession.shared.data(for: request)
         try BackendHTTPError.validate(response: response, data: data)
         return try BackendJSON.decoder.decode(BackendJobStatusResponse.self, from: data)
