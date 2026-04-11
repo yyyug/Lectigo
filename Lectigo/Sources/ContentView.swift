@@ -302,7 +302,10 @@ private struct SettingsTabView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Backend")) {
+                Section {
+                    Text("Backend")
+                        .font(.headline)
+
                     TextField("Backend Base URL", text: $sessionStore.baseURLString)
                         .textInputAutocapitalization(.never)
                         .keyboardType(.URL)
