@@ -225,11 +225,20 @@ private struct IOSLibraryTabView: View {
         NavigationStack {
             Group {
                 if store.videoFiles.isEmpty {
-                    ContentUnavailableView(
-                        "No Videos",
-                        systemImage: "film.stack",
-                        description: Text("Tap + to add video files from your Downloads or Files app.")
-                    )
+                    VStack(spacing: 12) {
+                        Image(systemName: "film.stack")
+                            .font(.system(size: 36))
+                            .foregroundStyle(.secondary)
+
+                        Text("No Videos")
+                            .font(.headline)
+
+                        Text("Tap + to add video files from your Downloads or Files app.")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding(24)
                 } else {
                     List {
                         ForEach(store.videoFiles) { file in
