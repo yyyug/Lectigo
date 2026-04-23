@@ -10,6 +10,7 @@ struct ContentView: View {
     @StateObject private var webViewStore: WebViewStore
     @StateObject private var sessionStore: BackendSessionStore
     @StateObject private var libraryStore: VideoLibraryStore
+    @StateObject private var iosLibraryStore = IOSVideoLibraryStore()
     @State private var selectedTab: RootTab = .browse
 
     init() {
@@ -33,7 +34,13 @@ struct ContentView: View {
             }
             .tag(RootTab.browse)
 
-            LibraryTabView(libraryStore: libraryStore)
+            DownloadTabView()
+            .tabItem {
+                Label("Download", systemImage: "arrow.down.circle")
+            }
+            .tag(RootTab.download)
+
+            IOSLibraryTabView(store: iosLibraryStore)
             .tabItem {
                 Label("Library", systemImage: "square.stack")
             }
@@ -53,6 +60,7 @@ struct ContentView: View {
 
 private enum RootTab {
     case browse
+    case download
     case library
     case settings
 }
@@ -163,7 +171,7 @@ private struct LibraryTabView: View {
                     }
                 }
             }
-            .navigationTitle("Library")
+            .navigationTitle("Downloads")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     if libraryStore.isProcessingQueue {
@@ -171,6 +179,297 @@ private struct LibraryTabView: View {
                     }
                 }
             }
+        }
+    }
+}
+
+// MARK: - Download Tab (Publer)
+
+private struct DownloadTabView: View {
+    var body: some View {
+        PublerWebView()
+            .ignoresSafeArea(edges: .bottom)
+    }
+}
+
+private final class PublerWebViewStore: NSObject, ObservableObject {
+    let webView: WKWebView
+
+    override init() {
+        let configuration = WKWebViewConfiguration()
+        configuration.allowsInlineMediaPlayback = true
+        self.webView = WKWebView(frame: .zero, configuration: configuration)
+        super.init()
+        webView.allowsBackForwardNavigationGestures = true
+        let url = URL(string: "https://publer.com/")!
+        webView.load(URLRequest(url: url))
+    }
+}
+
+private struct PublerWebView: UIViewRepresentable {
+    @StateObject private var store = PublerWebViewStore()
+
+    func makeUIView(context: Context) -> WKWebView { store.webView }
+    func updateUIView(_ uiView: WKWebView, context: Context) {}
+}
+
+// MARK: - iOS Library Tab
+
+private struct IOSLibraryTabView: View {
+    @ObservedObject var store: IOSVideoLibraryStore
+    @State private var showPicker = false
+
+    var body: some View {
+        NavigationStack {
+            Group {
+                if store.videoFiles.isEmpty {
+                    ContentUnavailableView(
+                        "No Videos",
+                        systemImage: "film.stack",
+                        description: Text("Tap + to add video files from your Downloads or Files app.")
+                    )
+                } else {
+                    List {
+                        ForEach(store.videoFiles) { file in
+                            NavigationLink {
+                                IOSVideoPlayerScreen(fileURL: file.url, title: file.name)
+                            } label: {
+                                IOSVideoFileRow(file: file)
+                            }
+                            .swipeActions {
+                                Button(role: .destructive) {
+                                    store.remove(file)
+                                } label: {
+                                    Label("Remove", systemImage: "trash")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Library")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showPicker = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
+            .sheet(isPresented: $showPicker) {
+                IOSVideoPicker { urls in
+                    store.addVideos(from: urls)
+                }
+            }
+            .task {
+                store.refresh()
+            }
+        }
+    }
+}
+
+private struct IOSVideoFileRow: View {
+    let file: IOSVideoFile
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(file.name)
+                .font(.headline)
+                .lineLimit(2)
+            if let size = file.formattedSize {
+                Text(size)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .padding(.vertical, 2)
+    }
+}
+
+// MARK: - iOS Video Player Screen (local file URL)
+
+private struct IOSVideoPlayerScreen: View {
+    let fileURL: URL
+    let title: String
+
+    @AppStorage("capture.crop.top.percent") private var cropTopPercent = 20.0
+    @AppStorage("capture.crop.bottom.percent") private var cropBottomPercent = 0.0
+    @AppStorage("capture.crop.left.percent") private var cropLeftPercent = 0.0
+    @AppStorage("capture.crop.right.percent") private var cropRightPercent = 0.0
+    @AppStorage("capture.interval.seconds") private var captureInterval = 0.5
+    @AppStorage("announcement.similarity.percent") private var announcementSimilarityPercent = 80.0
+    @AppStorage("ocr.engine") private var ocrEngineRaw = OCREngine.paddle.rawValue
+
+    @StateObject private var controller: LocalPlaybackOCRController
+
+    init(fileURL: URL, title: String) {
+        self.fileURL = fileURL
+        self.title = title
+        let engineRaw = UserDefaults.standard.string(forKey: "ocr.engine") ?? OCREngine.paddle.rawValue
+        let recognizer = OCREngine(rawValue: engineRaw)?.makeRecognizer() ?? PaddleOCRCaptionRecognizer()
+        _controller = StateObject(wrappedValue: LocalPlaybackOCRController(
+            recognizer: recognizer,
+            announcer: SpeechAnnouncer()
+        ))
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            VideoPlayer(player: controller.player)
+                .background(.black)
+                .overlay(alignment: .bottomLeading) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(controller.statusText)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        if !controller.lastRecognizedText.isEmpty {
+                            Text(controller.lastRecognizedText)
+                                .font(.caption)
+                                .lineLimit(3)
+                        }
+                    }
+                    .padding(10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(.thinMaterial)
+                }
+        }
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await controller.prepareOCRIfNeeded()
+            controller.loadVideo(from: fileURL)
+            controller.updateSettings(currentCaptureSettings())
+        }
+        .onDisappear {
+            controller.stop()
+        }
+    }
+
+    private func currentCaptureSettings() -> CaptureSettings {
+        var s = CaptureSettings(
+            cropTopPercent: cropTopPercent,
+            cropBottomPercent: cropBottomPercent,
+            cropLeftPercent: cropLeftPercent,
+            cropRightPercent: cropRightPercent,
+            captureInterval: captureInterval,
+            announcementSimilarityPercent: announcementSimilarityPercent
+        )
+        s.sanitize()
+        return s
+    }
+}
+
+// MARK: - OCR Engine
+
+enum OCREngine: String, CaseIterable {
+    case paddle = "paddle"
+    case vision = "vision"
+
+    var displayName: String {
+        switch self {
+        case .paddle: return "PaddleOCR"
+        case .vision: return "iOS Vision (Built-in)"
+        }
+    }
+
+    func makeRecognizer() -> any CaptionOCRRecognizing {
+        switch self {
+        case .paddle: return PaddleOCRCaptionRecognizer()
+        case .vision: return VisionCaptionRecognizer()
+        }
+    }
+}
+
+// MARK: - iOS Video Library Store
+
+@MainActor
+final class IOSVideoLibraryStore: ObservableObject {
+    @Published private(set) var videoFiles: [IOSVideoFile] = []
+
+    private let videosDirectory: URL = {
+        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return docs.appendingPathComponent("IOSLibraryVideos", isDirectory: true)
+    }()
+
+    func refresh() {
+        try? FileManager.default.createDirectory(at: videosDirectory, withIntermediateDirectories: true)
+        let fm = FileManager.default
+        let videoExtensions: Set<String> = ["mp4", "mov", "m4v", "avi", "mkv"]
+        let urls = (try? fm.contentsOfDirectory(at: videosDirectory, includingPropertiesForKeys: [.fileSizeKey], options: [.skipsHiddenFiles])) ?? []
+        videoFiles = urls
+            .filter { videoExtensions.contains($0.pathExtension.lowercased()) }
+            .sorted { $0.lastPathComponent < $1.lastPathComponent }
+            .map { url in
+                let size = (try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0
+                return IOSVideoFile(url: url, name: url.deletingPathExtension().lastPathComponent, fileSizeBytes: size)
+            }
+    }
+
+    func addVideos(from urls: [URL]) {
+        try? FileManager.default.createDirectory(at: videosDirectory, withIntermediateDirectories: true)
+        for sourceURL in urls {
+            let accessing = sourceURL.startAccessingSecurityScopedResource()
+            defer { if accessing { sourceURL.stopAccessingSecurityScopedResource() } }
+            let destination = uniqueDestination(for: sourceURL)
+            try? FileManager.default.copyItem(at: sourceURL, to: destination)
+        }
+        refresh()
+    }
+
+    func remove(_ file: IOSVideoFile) {
+        try? FileManager.default.removeItem(at: file.url)
+        videoFiles.removeAll { $0.id == file.id }
+    }
+
+    private func uniqueDestination(for source: URL) -> URL {
+        var destination = videosDirectory.appendingPathComponent(source.lastPathComponent)
+        var counter = 1
+        while FileManager.default.fileExists(atPath: destination.path) {
+            let base = source.deletingPathExtension().lastPathComponent
+            let ext = source.pathExtension
+            destination = videosDirectory.appendingPathComponent("\(base)_\(counter).\(ext)")
+            counter += 1
+        }
+        return destination
+    }
+}
+
+struct IOSVideoFile: Identifiable {
+    let id: UUID = UUID()
+    let url: URL
+    let name: String
+    let fileSizeBytes: Int
+
+    var formattedSize: String? {
+        guard fileSizeBytes > 0 else { return nil }
+        return ByteCountFormatter.string(fromByteCount: Int64(fileSizeBytes), countStyle: .file)
+    }
+}
+
+// MARK: - iOS Video Picker (UIDocumentPickerViewController)
+
+private struct IOSVideoPicker: UIViewControllerRepresentable {
+    let onPick: ([URL]) -> Void
+
+    func makeCoordinator() -> Coordinator { Coordinator(onPick: onPick) }
+
+    func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+        let types: [UTType] = [.movie, .video, .mpeg4Movie, .quickTimeMovie]
+        let picker = UIDocumentPickerViewController(forOpeningContentTypes: types, asCopy: true)
+        picker.allowsMultipleSelection = true
+        picker.delegate = context.coordinator
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
+
+    final class Coordinator: NSObject, UIDocumentPickerDelegate {
+        let onPick: ([URL]) -> Void
+        init(onPick: @escaping ([URL]) -> Void) { self.onPick = onPick }
+
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            onPick(urls)
         }
     }
 }
@@ -236,10 +535,17 @@ private struct LocalVideoPlayerScreen: View {
     @AppStorage("capture.interval.seconds") private var captureInterval = 0.5
     @AppStorage("announcement.similarity.percent") private var announcementSimilarityPercent = 80.0
 
-    @StateObject private var controller = LocalPlaybackOCRController(
-        recognizer: PaddleOCRCaptionRecognizer(),
-        announcer: SpeechAnnouncer()
-    )
+    @StateObject private var controller: LocalPlaybackOCRController
+
+    init(item: VideoLibraryItem) {
+        self.item = item
+        let engineRaw = UserDefaults.standard.string(forKey: "ocr.engine") ?? OCREngine.paddle.rawValue
+        let recognizer = OCREngine(rawValue: engineRaw)?.makeRecognizer() ?? PaddleOCRCaptionRecognizer()
+        _controller = StateObject(wrappedValue: LocalPlaybackOCRController(
+            recognizer: recognizer,
+            announcer: SpeechAnnouncer()
+        ))
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -297,7 +603,15 @@ private struct SettingsTabView: View {
     @AppStorage("capture.crop.right.percent") private var cropRightPercent = 0.0
     @AppStorage("capture.interval.seconds") private var captureInterval = 0.5
     @AppStorage("announcement.similarity.percent") private var announcementSimilarityPercent = 80.0
+    @AppStorage("ocr.engine") private var ocrEngineRaw = OCREngine.paddle.rawValue
     @State private var password = ""
+
+    private var ocrEngineBinding: Binding<OCREngine> {
+        Binding(
+            get: { OCREngine(rawValue: ocrEngineRaw) ?? .paddle },
+            set: { ocrEngineRaw = $0.rawValue }
+        )
+    }
 
     var body: some View {
         NavigationStack {
@@ -345,6 +659,17 @@ private struct SettingsTabView: View {
                     }
                 }
                 .padding(.vertical, 4)
+
+                Section("Text Recognition") {
+                    Picker("OCR Engine", selection: ocrEngineBinding) {
+                        ForEach(OCREngine.allCases, id: \.self) { engine in
+                            Text(engine.displayName).tag(engine)
+                        }
+                    }
+                    Text("iOS Vision uses the built-in on-device recognition. PaddleOCR uses the bundled PaddleOCR model. Changes apply the next time you open a video.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
 
                 Section("Capture Area") {
                     percentageField(title: "Trim Top (%)", value: $cropTopPercent)
@@ -1069,7 +1394,7 @@ final class LocalPlaybackOCRController: ObservableObject {
 
     let player = AVPlayer()
 
-    private let recognizer: PaddleOCRCaptionRecognizer
+    private let recognizer: any CaptionOCRRecognizing
     private let announcer: SpeechAnnouncer
     private var settings = CaptureSettings()
     private let ciContext = CIContext()
@@ -1082,7 +1407,7 @@ final class LocalPlaybackOCRController: ObservableObject {
     private var lastAnnouncedText = ""
     private var prepared = false
 
-    init(recognizer: PaddleOCRCaptionRecognizer, announcer: SpeechAnnouncer) {
+    init(recognizer: any CaptionOCRRecognizing, announcer: SpeechAnnouncer) {
         self.recognizer = recognizer
         self.announcer = announcer
         observePlayer()
