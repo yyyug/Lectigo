@@ -174,13 +174,13 @@ private struct LibraryTabView: View {
                 }
             }
             .navigationTitle("Downloads")
-            .toolbar {
-                ToolbarItemGroup(placement: .topBarTrailing) {
+            .navigationBarItems(
+                trailing: Group {
                     if libraryStore.isProcessingQueue {
                         ProgressView()
                     }
                 }
-            }
+            )
         }
     }
 }
@@ -250,15 +250,13 @@ private struct IOSLibraryTabView: View {
                 }
             }
             .navigationTitle("Library")
-            .toolbar {
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button {
-                        showPicker = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+            .navigationBarItems(
+                trailing: Button {
+                    showPicker = true
+                } label: {
+                    Image(systemName: "plus")
                 }
-            }
+            )
             .sheet(isPresented: $showPicker) {
                 IOSVideoPicker { urls in
                     store.addVideos(from: urls)
