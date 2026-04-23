@@ -251,7 +251,7 @@ private struct IOSLibraryTabView: View {
             }
             .navigationTitle("Library")
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItemGroup(placement: .topBarTrailing) {
                     Button {
                         showPicker = true
                     } label: {
