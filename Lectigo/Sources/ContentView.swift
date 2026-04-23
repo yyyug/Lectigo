@@ -5,6 +5,8 @@ import CoreImage
 import Security
 import SwiftUI
 import UIKit
+import WebKit
+import Vision
 
 struct ContentView: View {
     @StateObject private var webViewStore: WebViewStore
