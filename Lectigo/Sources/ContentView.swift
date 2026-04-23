@@ -175,7 +175,7 @@ private struct LibraryTabView: View {
             }
             .navigationTitle("Downloads")
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItemGroup(placement: .topBarTrailing) {
                     if libraryStore.isProcessingQueue {
                         ProgressView()
                     }
