@@ -35,6 +35,7 @@
 		111111111111111111111212 /* PDBPolygonOffsetBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111065 /* PDBPolygonOffsetBridge.mm */; };
 		111111111111111111111213 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111066 /* clipper.cpp */; };
 		111111111111111111111214 /* ScreenCaptureCaptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111068 /* ScreenCaptureCaptionController.swift */; };
+		111111111111111111111216 /* CaptionPictureInPictureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111106A /* CaptionPictureInPictureController.swift */; };
 		111111111111111111111215 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111069 /* Models */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		111111111111111111111066 /* clipper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = clipper.cpp; sourceTree = "<group>"; };
 		111111111111111111111067 /* clipper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = clipper.hpp; sourceTree = "<group>"; };
 		111111111111111111111068 /* ScreenCaptureCaptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCaptureCaptionController.swift; sourceTree = "<group>"; };
+		11111111111111111111106A /* CaptionPictureInPictureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionPictureInPictureController.swift; sourceTree = "<group>"; };
 		111111111111111111111069 /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Models; path = Lectigo/Models; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -214,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				111111111111111111111068 /* ScreenCaptureCaptionController.swift */,
+				11111111111111111111106A /* CaptionPictureInPictureController.swift */,
 			);
 			path = ScreenCapture;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				11111111111111111111110A /* VisionCaptionRecognizer.swift in Sources */,
 				111111111111111111111107 /* SpeechAnnouncer.swift in Sources */,
 				111111111111111111111214 /* ScreenCaptureCaptionController.swift in Sources */,
+				111111111111111111111216 /* CaptionPictureInPictureController.swift in Sources */,
 				111111111111111111111201 /* BoxSorter.swift in Sources */,
 				111111111111111111111202 /* CTCDecoder.swift in Sources */,
 				111111111111111111111203 /* DBPostProcess.swift in Sources */,

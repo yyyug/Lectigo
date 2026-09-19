@@ -47,6 +47,13 @@ private struct CaptureTabView: View {
                 captureButton
             }
             .padding()
+            .overlay(alignment: .bottomTrailing) {
+                PictureInPictureHostView(displayLayer: controller.pictureInPicture.displayLayer)
+                    .frame(width: 16, height: 9)
+                    .opacity(0.01)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            }
             .navigationTitle("Capture")
             .navigationBarTitleDisplayMode(.inline)
             .task {

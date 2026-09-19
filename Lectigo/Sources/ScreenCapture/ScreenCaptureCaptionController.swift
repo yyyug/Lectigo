@@ -1,3 +1,4 @@
+import AVFAudio
 import Combine
 import CoreImage
 import CoreMedia
@@ -14,6 +15,8 @@ final class ScreenCaptureCaptionController: NSObject, ObservableObject {
 
     private let recognizer: CaptionOCRRecognizing
     private let announcer = SpeechAnnouncer()
+    let pictureInPicture = CaptionPictureInPictureController()
+    private var isAudioSessionActive = false
     private var settings = CaptureSettings()
     private let ciContext = CIContext()
 
@@ -82,6 +85,8 @@ final class ScreenCaptureCaptionController: NSObject, ObservableObject {
         latestPixelBuffer = nil
         stream = nil
         isCapturing = false
+        pictureInPicture.stop()
+        deactivateBackgroundAudioSession()
     }
 }
 
@@ -161,7 +166,27 @@ private extension ScreenCaptureCaptionController {
         self.stream = stream
         isCapturing = true
         statusText = "Capturing"
+        activateBackgroundAudioSession()
+        pictureInPicture.start()
         restartTimer()
+    }
+
+    func activateBackgroundAudioSession() {
+        guard !isAudioSessionActive else { return }
+        let session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(.playback, mode: .spokenAudio, options: [.mixWithOthers])
+            try session.setActive(true)
+            isAudioSessionActive = true
+        } catch {
+            // Capture still works while the app stays in the foreground.
+        }
+    }
+
+    func deactivateBackgroundAudioSession() {
+        guard isAudioSessionActive else { return }
+        isAudioSessionActive = false
+        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
     }
 
     func restartTimer() {
@@ -184,6 +209,7 @@ private extension ScreenCaptureCaptionController {
                 let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
                 guard !trimmed.isEmpty else { return }
                 self.currentCaption = trimmed
+                self.pictureInPicture.update(text: trimmed)
                 if self.shouldAnnounce(trimmed) {
                     self.lastAnnouncedText = trimmed
                     self.announcer.speak(trimmed)
