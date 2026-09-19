@@ -56,6 +56,7 @@ final class ScreenCaptureCaptionController: NSObject, ObservableObject {
             didConfigurePicker = true
         }
         picker.add(self)
+        picker.isActive = true
         statusText = "Select content to capture"
         picker.present()
     }
@@ -65,6 +66,7 @@ final class ScreenCaptureCaptionController: NSObject, ObservableObject {
         timer = nil
         latestPixelBuffer = nil
         SCContentSharingPicker.shared.remove(self)
+        SCContentSharingPicker.shared.isActive = false
         guard let stream else {
             teardownStream()
             return
