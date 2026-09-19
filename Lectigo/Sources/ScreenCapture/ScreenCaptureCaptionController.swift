@@ -134,7 +134,6 @@ private extension ScreenCaptureCaptionController {
         let config = SCStreamConfiguration()
         config.width = 1920
         config.height = 1080
-        config.showsCursor = false
 
         let newStream = SCStream(filter: filter, configuration: config, delegate: self)
         isStreamAddPending = true
