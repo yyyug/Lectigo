@@ -9,83 +9,79 @@
 /* Begin PBXBuildFile section */
 		111111111111111111111101 /* LectigoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111001 /* LectigoApp.swift */; };
 		111111111111111111111102 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111002 /* ContentView.swift */; };
-		111111111111111111111103 /* YouTubeWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111003 /* YouTubeWebView.swift */; };
 		111111111111111111111104 /* CaptionOCRRecognizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111004 /* CaptionOCRRecognizing.swift */; };
 		111111111111111111111105 /* PaddleOCRCaptionRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111005 /* PaddleOCRCaptionRecognizer.swift */; };
-		111111111111111111111106 /* VideoCaptionMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111006 /* VideoCaptionMonitor.swift */; };
 		111111111111111111111107 /* SpeechAnnouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111007 /* SpeechAnnouncer.swift */; };
-		111111111111111111111108 /* PaddleOCRBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111008 /* PaddleOCRBridge.mm */; };
 		111111111111111111111109 /* FallbackCaptionRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111100D /* FallbackCaptionRecognizer.swift */; };
 		11111111111111111111110A /* VisionCaptionRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111100E /* VisionCaptionRecognizer.swift */; };
-		11111111111111111111110B /* libpaddle_api_light_bundled.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11111111111111111111100F /* libpaddle_api_light_bundled.a */; };
-		11111111111111111111110C /* PP-OCRv5_mobile_det.nb in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111010 /* PP-OCRv5_mobile_det.nb */; };
-		11111111111111111111110D /* PP-OCRv5_mobile_rec.nb in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111011 /* PP-OCRv5_mobile_rec.nb */; };
-		11111111111111111111110E /* ppocr_keys_ocrv5.txt in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111012 /* ppocr_keys_ocrv5.txt */; };
-		11111111111111111111110F /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 111111111111111111111013 /* opencv2.framework */; };
-		111111111111111111111110 /* PP-LCNet_x0_25_textline_ori.nb in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111014 /* PP-LCNet_x0_25_textline_ori.nb */; };
-		111111111111111111111111 /* config.txt in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111015 /* config.txt */; };
-		111111111111111111111112 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111016 /* clipper.cpp */; };
-		111111111111111111111113 /* cls_process.cc in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111018 /* cls_process.cc */; };
-		111111111111111111111114 /* db_post_process.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111101A /* db_post_process.cc */; };
-		111111111111111111111115 /* det_process.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111101C /* det_process.cc */; };
-		111111111111111111111116 /* pipeline.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111101E /* pipeline.cc */; };
-		111111111111111111111117 /* rec_process.cc in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111020 /* rec_process.cc */; };
-		111111111111111111111118 /* utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111022 /* utils.cc */; };
 		111111111111111111111119 /* CaptureSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111025 /* CaptureSettings.swift */; };
-		11111111111111111111111A /* ToolRunnerBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111027 /* ToolRunnerBridge.mm */; };
-		11111111111111111111111B /* EmbeddedTools in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111028 /* EmbeddedTools */; };
+		111111111111111111111201 /* BoxSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111051 /* BoxSorter.swift */; };
+		111111111111111111111202 /* CTCDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111052 /* CTCDecoder.swift */; };
+		111111111111111111111203 /* DBPostProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111053 /* DBPostProcess.swift */; };
+		111111111111111111111204 /* DetectionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111054 /* DetectionEngine.swift */; };
+		111111111111111111111205 /* EncodedImageCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111055 /* EncodedImageCodec.swift */; };
+		111111111111111111111206 /* InferenceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111056 /* InferenceConfig.swift */; };
+		111111111111111111111207 /* ModelConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111057 /* ModelConfig.swift */; };
+		111111111111111111111208 /* OCREngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111058 /* OCREngine.swift */; };
+		111111111111111111111209 /* OcrEngineLogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111059 /* OcrEngineLogStore.swift */; };
+		11111111111111111111120A /* OCRParameterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111105A /* OCRParameterResolver.swift */; };
+		11111111111111111111120B /* ORTSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111105B /* ORTSessionManager.swift */; };
+		11111111111111111111120C /* Preprocessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111105C /* Preprocessing.swift */; };
+		11111111111111111111120D /* QuadTextCrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111105D /* QuadTextCrop.swift */; };
+		11111111111111111111120E /* RecPreprocessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111105E /* RecPreprocessor.swift */; };
+		11111111111111111111120F /* RecognitionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11111111111111111111105F /* RecognitionEngine.swift */; };
+		111111111111111111111210 /* OpenCVDBBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111061 /* OpenCVDBBridge.mm */; };
+		111111111111111111111211 /* OpenCVImageBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111063 /* OpenCVImageBridge.mm */; };
+		111111111111111111111212 /* PDBPolygonOffsetBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111065 /* PDBPolygonOffsetBridge.mm */; };
+		111111111111111111111213 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111066 /* clipper.cpp */; };
+		111111111111111111111214 /* ScreenCaptureCaptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111068 /* ScreenCaptureCaptionController.swift */; };
+		111111111111111111111215 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = 111111111111111111111069 /* Models */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		111111111111111111111001 /* LectigoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectigoApp.swift; sourceTree = "<group>"; };
 		111111111111111111111002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		111111111111111111111003 /* YouTubeWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeWebView.swift; sourceTree = "<group>"; };
 		111111111111111111111004 /* CaptionOCRRecognizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionOCRRecognizing.swift; sourceTree = "<group>"; };
 		111111111111111111111005 /* PaddleOCRCaptionRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddleOCRCaptionRecognizer.swift; sourceTree = "<group>"; };
-		111111111111111111111006 /* VideoCaptionMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCaptionMonitor.swift; sourceTree = "<group>"; };
 		111111111111111111111007 /* SpeechAnnouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechAnnouncer.swift; sourceTree = "<group>"; };
-		111111111111111111111008 /* PaddleOCRBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PaddleOCRBridge.mm; sourceTree = "<group>"; };
-		111111111111111111111009 /* PaddleOCRBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaddleOCRBridge.h; sourceTree = "<group>"; };
 		11111111111111111111100A /* Lectigo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lectigo-Bridging-Header.h"; sourceTree = "<group>"; };
 		11111111111111111111100B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11111111111111111111100C /* Lectigo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lectigo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11111111111111111111100D /* FallbackCaptionRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallbackCaptionRecognizer.swift; sourceTree = "<group>"; };
 		11111111111111111111100E /* VisionCaptionRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionCaptionRecognizer.swift; sourceTree = "<group>"; };
-		11111111111111111111100F /* libpaddle_api_light_bundled.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpaddle_api_light_bundled.a; path = ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/lib/libpaddle_api_light_bundled.a; sourceTree = SOURCE_ROOT; };
-		111111111111111111111010 /* PP-OCRv5_mobile_det.nb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PP-OCRv5_mobile_det.nb"; path = Lectigo/Models/PaddleOCRv5/PP-OCRv5_mobile_det.nb; sourceTree = SOURCE_ROOT; };
-		111111111111111111111011 /* PP-OCRv5_mobile_rec.nb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PP-OCRv5_mobile_rec.nb"; path = Lectigo/Models/PaddleOCRv5/PP-OCRv5_mobile_rec.nb; sourceTree = SOURCE_ROOT; };
-		111111111111111111111012 /* ppocr_keys_ocrv5.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = ppocr_keys_ocrv5.txt; path = Lectigo/Models/PaddleOCRv5/ppocr_keys_ocrv5.txt; sourceTree = SOURCE_ROOT; };
-		111111111111111111111013 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ThirdParty/OpenCV/opencv2.framework; sourceTree = SOURCE_ROOT; };
-		111111111111111111111014 /* PP-LCNet_x0_25_textline_ori.nb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PP-LCNet_x0_25_textline_ori.nb"; path = Lectigo/Models/PaddleOCRv5/PP-LCNet_x0_25_textline_ori.nb; sourceTree = SOURCE_ROOT; };
-		111111111111111111111015 /* config.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = config.txt; path = Lectigo/Models/PaddleOCRv5/config.txt; sourceTree = SOURCE_ROOT; };
-		111111111111111111111016 /* clipper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = clipper.cpp; sourceTree = "<group>"; };
-		111111111111111111111017 /* clipper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = clipper.hpp; sourceTree = "<group>"; };
-		111111111111111111111018 /* cls_process.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cls_process.cc; sourceTree = "<group>"; };
-		111111111111111111111019 /* cls_process.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cls_process.h; sourceTree = "<group>"; };
-		11111111111111111111101A /* db_post_process.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = db_post_process.cc; sourceTree = "<group>"; };
-		11111111111111111111101B /* db_post_process.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = db_post_process.h; sourceTree = "<group>"; };
-		11111111111111111111101C /* det_process.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = det_process.cc; sourceTree = "<group>"; };
-		11111111111111111111101D /* det_process.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = det_process.h; sourceTree = "<group>"; };
-		11111111111111111111101E /* pipeline.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pipeline.cc; sourceTree = "<group>"; };
-		11111111111111111111101F /* pipeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pipeline.h; sourceTree = "<group>"; };
-		111111111111111111111020 /* rec_process.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rec_process.cc; sourceTree = "<group>"; };
-		111111111111111111111021 /* rec_process.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rec_process.h; sourceTree = "<group>"; };
-		111111111111111111111022 /* utils.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utils.cc; sourceTree = "<group>"; };
-		111111111111111111111023 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
-		111111111111111111111024 /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
 		111111111111111111111025 /* CaptureSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSettings.swift; sourceTree = "<group>"; };
-		111111111111111111111026 /* ToolRunnerBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToolRunnerBridge.h; sourceTree = "<group>"; };
-		111111111111111111111027 /* ToolRunnerBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ToolRunnerBridge.mm; sourceTree = "<group>"; };
-		111111111111111111111028 /* EmbeddedTools */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EmbeddedTools; sourceTree = "<group>"; };
+		111111111111111111111051 /* BoxSorter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxSorter.swift; sourceTree = "<group>"; };
+		111111111111111111111052 /* CTCDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCDecoder.swift; sourceTree = "<group>"; };
+		111111111111111111111053 /* DBPostProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBPostProcess.swift; sourceTree = "<group>"; };
+		111111111111111111111054 /* DetectionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionEngine.swift; sourceTree = "<group>"; };
+		111111111111111111111055 /* EncodedImageCodec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodedImageCodec.swift; sourceTree = "<group>"; };
+		111111111111111111111056 /* InferenceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceConfig.swift; sourceTree = "<group>"; };
+		111111111111111111111057 /* ModelConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelConfig.swift; sourceTree = "<group>"; };
+		111111111111111111111058 /* OCREngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCREngine.swift; sourceTree = "<group>"; };
+		111111111111111111111059 /* OcrEngineLogStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OcrEngineLogStore.swift; sourceTree = "<group>"; };
+		11111111111111111111105A /* OCRParameterResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRParameterResolver.swift; sourceTree = "<group>"; };
+		11111111111111111111105B /* ORTSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ORTSessionManager.swift; sourceTree = "<group>"; };
+		11111111111111111111105C /* Preprocessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preprocessing.swift; sourceTree = "<group>"; };
+		11111111111111111111105D /* QuadTextCrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTextCrop.swift; sourceTree = "<group>"; };
+		11111111111111111111105E /* RecPreprocessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecPreprocessor.swift; sourceTree = "<group>"; };
+		11111111111111111111105F /* RecognitionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionEngine.swift; sourceTree = "<group>"; };
+		111111111111111111111060 /* OpenCVDBBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenCVDBBridge.h; sourceTree = "<group>"; };
+		111111111111111111111061 /* OpenCVDBBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVDBBridge.mm; sourceTree = "<group>"; };
+		111111111111111111111062 /* OpenCVImageBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenCVImageBridge.h; sourceTree = "<group>"; };
+		111111111111111111111063 /* OpenCVImageBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVImageBridge.mm; sourceTree = "<group>"; };
+		111111111111111111111064 /* PDBPolygonOffsetBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PDBPolygonOffsetBridge.h; sourceTree = "<group>"; };
+		111111111111111111111065 /* PDBPolygonOffsetBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PDBPolygonOffsetBridge.mm; sourceTree = "<group>"; };
+		111111111111111111111066 /* clipper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = clipper.cpp; sourceTree = "<group>"; };
+		111111111111111111111067 /* clipper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = clipper.hpp; sourceTree = "<group>"; };
+		111111111111111111111068 /* ScreenCaptureCaptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCaptureCaptionController.swift; sourceTree = "<group>"; };
+		111111111111111111111069 /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Models; path = Lectigo/Models; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		111111111111111111111201 /* Frameworks */ = {
+		111111111111111111111A01 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11111111111111111111110B /* libpaddle_api_light_bundled.a in Frameworks */,
-				11111111111111111111110F /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				111111111111111111111302 /* Lectigo */,
-				111111111111111111111309 /* ThirdParty */,
 				111111111111111111111303 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -106,7 +101,6 @@
 			children = (
 				111111111111111111111304 /* Sources */,
 				11111111111111111111130A /* Models */,
-				111111111111111111111028 /* EmbeddedTools */,
 				11111111111111111111100B /* Info.plist */,
 			);
 			path = Lectigo;
@@ -125,21 +119,13 @@
 			children = (
 				111111111111111111111001 /* LectigoApp.swift */,
 				111111111111111111111002 /* ContentView.swift */,
-				111111111111111111111305 /* Web */,
 				111111111111111111111306 /* OCR */,
 				111111111111111111111307 /* Speech */,
 				111111111111111111111308 /* Native */,
-				11111111111111111111130D /* PaddleOCRCore */,
+				11111111111111111111130D /* PaddleOCR */,
+				111111111111111111111311 /* ScreenCapture */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		111111111111111111111305 /* Web */ = {
-			isa = PBXGroup;
-			children = (
-				111111111111111111111003 /* YouTubeWebView.swift */,
-			);
-			path = Web;
 			sourceTree = "<group>";
 		};
 		111111111111111111111306 /* OCR */ = {
@@ -150,7 +136,6 @@
 				111111111111111111111005 /* PaddleOCRCaptionRecognizer.swift */,
 				11111111111111111111100D /* FallbackCaptionRecognizer.swift */,
 				11111111111111111111100E /* VisionCaptionRecognizer.swift */,
-				111111111111111111111006 /* VideoCaptionMonitor.swift */,
 			);
 			path = OCR;
 			sourceTree = "<group>";
@@ -166,80 +151,71 @@
 		111111111111111111111308 /* Native */ = {
 			isa = PBXGroup;
 			children = (
-				111111111111111111111009 /* PaddleOCRBridge.h */,
-				111111111111111111111008 /* PaddleOCRBridge.mm */,
-				111111111111111111111026 /* ToolRunnerBridge.h */,
-				111111111111111111111027 /* ToolRunnerBridge.mm */,
 				11111111111111111111100A /* Lectigo-Bridging-Header.h */,
 			);
 			path = Native;
 			sourceTree = "<group>";
 		};
-		111111111111111111111309 /* ThirdParty */ = {
-			isa = PBXGroup;
-			children = (
-				11111111111111111111130C /* PaddleLite */,
-				11111111111111111111130E /* OpenCV */,
-			);
-			path = ThirdParty;
-			sourceTree = "<group>";
-		};
 		11111111111111111111130A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				11111111111111111111130B /* PaddleOCRv5 */,
+				111111111111111111111069 /* Models */,
 			);
-			path = Models;
+			name = Models;
 			sourceTree = "<group>";
 		};
-		11111111111111111111130B /* PaddleOCRv5 */ = {
+		11111111111111111111130D /* PaddleOCR */ = {
 			isa = PBXGroup;
 			children = (
-				111111111111111111111014 /* PP-LCNet_x0_25_textline_ori.nb */,
-				111111111111111111111010 /* PP-OCRv5_mobile_det.nb */,
-				111111111111111111111011 /* PP-OCRv5_mobile_rec.nb */,
-				111111111111111111111015 /* config.txt */,
-				111111111111111111111012 /* ppocr_keys_ocrv5.txt */,
+				111111111111111111111051 /* BoxSorter.swift */,
+				111111111111111111111052 /* CTCDecoder.swift */,
+				111111111111111111111053 /* DBPostProcess.swift */,
+				111111111111111111111054 /* DetectionEngine.swift */,
+				111111111111111111111055 /* EncodedImageCodec.swift */,
+				111111111111111111111056 /* InferenceConfig.swift */,
+				111111111111111111111057 /* ModelConfig.swift */,
+				111111111111111111111058 /* OCREngine.swift */,
+				111111111111111111111059 /* OcrEngineLogStore.swift */,
+				11111111111111111111105A /* OCRParameterResolver.swift */,
+				11111111111111111111105B /* ORTSessionManager.swift */,
+				11111111111111111111105C /* Preprocessing.swift */,
+				11111111111111111111105D /* QuadTextCrop.swift */,
+				11111111111111111111105E /* RecPreprocessor.swift */,
+				11111111111111111111105F /* RecognitionEngine.swift */,
+				11111111111111111111130E /* CV */,
+				11111111111111111111130F /* Clipper */,
 			);
-			path = PaddleOCRv5;
+			path = PaddleOCR;
 			sourceTree = "<group>";
 		};
-		11111111111111111111130C /* PaddleLite */ = {
+		11111111111111111111130E /* CV */ = {
 			isa = PBXGroup;
 			children = (
-				11111111111111111111100F /* libpaddle_api_light_bundled.a */,
+				111111111111111111111060 /* OpenCVDBBridge.h */,
+				111111111111111111111061 /* OpenCVDBBridge.mm */,
+				111111111111111111111062 /* OpenCVImageBridge.h */,
+				111111111111111111111063 /* OpenCVImageBridge.mm */,
+				111111111111111111111064 /* PDBPolygonOffsetBridge.h */,
+				111111111111111111111065 /* PDBPolygonOffsetBridge.mm */,
 			);
-			path = PaddleLite;
+			path = CV;
 			sourceTree = "<group>";
 		};
-		11111111111111111111130D /* PaddleOCRCore */ = {
+		11111111111111111111130F /* Clipper */ = {
 			isa = PBXGroup;
 			children = (
-				111111111111111111111016 /* clipper.cpp */,
-				111111111111111111111017 /* clipper.hpp */,
-				111111111111111111111018 /* cls_process.cc */,
-				111111111111111111111019 /* cls_process.h */,
-				11111111111111111111101A /* db_post_process.cc */,
-				11111111111111111111101B /* db_post_process.h */,
-				11111111111111111111101C /* det_process.cc */,
-				11111111111111111111101D /* det_process.h */,
-				11111111111111111111101E /* pipeline.cc */,
-				11111111111111111111101F /* pipeline.h */,
-				111111111111111111111020 /* rec_process.cc */,
-				111111111111111111111021 /* rec_process.h */,
-				111111111111111111111024 /* timer.h */,
-				111111111111111111111022 /* utils.cc */,
-				111111111111111111111023 /* utils.h */,
+				111111111111111111111066 /* clipper.cpp */,
+				111111111111111111111067 /* clipper.hpp */,
 			);
-			path = PaddleOCRCore;
+			path = Clipper;
 			sourceTree = "<group>";
 		};
-		11111111111111111111130E /* OpenCV */ = {
+		111111111111111111111311 /* ScreenCapture */ = {
 			isa = PBXGroup;
 			children = (
-				111111111111111111111013 /* opencv2.framework */,
+				111111111111111111111068 /* ScreenCaptureCaptionController.swift */,
 			);
-			path = OpenCV;
+			path = ScreenCapture;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,7 +226,7 @@
 			buildConfigurationList = 111111111111111111111701 /* Build configuration list for PBXNativeTarget "Lectigo" */;
 			buildPhases = (
 				111111111111111111111501 /* Sources */,
-				111111111111111111111201 /* Frameworks */,
+				111111111111111111111A01 /* Frameworks */,
 				111111111111111111111502 /* Resources */,
 			);
 			buildRules = (
@@ -300,12 +276,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				111111111111111111111110 /* PP-LCNet_x0_25_textline_ori.nb in Resources */,
-				11111111111111111111110C /* PP-OCRv5_mobile_det.nb in Resources */,
-				11111111111111111111110D /* PP-OCRv5_mobile_rec.nb in Resources */,
-				11111111111111111111111B /* EmbeddedTools in Resources */,
-				111111111111111111111111 /* config.txt in Resources */,
-				11111111111111111111110E /* ppocr_keys_ocrv5.txt in Resources */,
+				111111111111111111111215 /* Models in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,23 +289,32 @@
 			files = (
 				111111111111111111111101 /* LectigoApp.swift in Sources */,
 				111111111111111111111102 /* ContentView.swift in Sources */,
-				111111111111111111111103 /* YouTubeWebView.swift in Sources */,
 				111111111111111111111104 /* CaptionOCRRecognizing.swift in Sources */,
 				111111111111111111111119 /* CaptureSettings.swift in Sources */,
 				111111111111111111111105 /* PaddleOCRCaptionRecognizer.swift in Sources */,
-				111111111111111111111106 /* VideoCaptionMonitor.swift in Sources */,
-				111111111111111111111107 /* SpeechAnnouncer.swift in Sources */,
-				111111111111111111111108 /* PaddleOCRBridge.mm in Sources */,
-				11111111111111111111111A /* ToolRunnerBridge.mm in Sources */,
 				111111111111111111111109 /* FallbackCaptionRecognizer.swift in Sources */,
 				11111111111111111111110A /* VisionCaptionRecognizer.swift in Sources */,
-				111111111111111111111112 /* clipper.cpp in Sources */,
-				111111111111111111111113 /* cls_process.cc in Sources */,
-				111111111111111111111114 /* db_post_process.cc in Sources */,
-				111111111111111111111115 /* det_process.cc in Sources */,
-				111111111111111111111116 /* pipeline.cc in Sources */,
-				111111111111111111111117 /* rec_process.cc in Sources */,
-				111111111111111111111118 /* utils.cc in Sources */,
+				111111111111111111111107 /* SpeechAnnouncer.swift in Sources */,
+				111111111111111111111214 /* ScreenCaptureCaptionController.swift in Sources */,
+				111111111111111111111201 /* BoxSorter.swift in Sources */,
+				111111111111111111111202 /* CTCDecoder.swift in Sources */,
+				111111111111111111111203 /* DBPostProcess.swift in Sources */,
+				111111111111111111111204 /* DetectionEngine.swift in Sources */,
+				111111111111111111111205 /* EncodedImageCodec.swift in Sources */,
+				111111111111111111111206 /* InferenceConfig.swift in Sources */,
+				111111111111111111111207 /* ModelConfig.swift in Sources */,
+				111111111111111111111208 /* OCREngine.swift in Sources */,
+				111111111111111111111209 /* OcrEngineLogStore.swift in Sources */,
+				11111111111111111111120A /* OCRParameterResolver.swift in Sources */,
+				11111111111111111111120B /* ORTSessionManager.swift in Sources */,
+				11111111111111111111120C /* Preprocessing.swift in Sources */,
+				11111111111111111111120D /* QuadTextCrop.swift in Sources */,
+				11111111111111111111120E /* RecPreprocessor.swift in Sources */,
+				11111111111111111111120F /* RecognitionEngine.swift in Sources */,
+				111111111111111111111210 /* OpenCVDBBridge.mm in Sources */,
+				111111111111111111111211 /* OpenCVImageBridge.mm in Sources */,
+				111111111111111111111212 /* PDBPolygonOffsetBridge.mm in Sources */,
+				111111111111111111111213 /* clipper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,7 +373,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -449,7 +429,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -469,33 +449,21 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Lectigo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/lib",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-lc++",
 					"-ObjC",
-					"-force_load",
-					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/lib/libpaddle_api_light_bundled.a",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.Lectigo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Lectigo/Sources/PaddleOCRCore",
-					"$(PROJECT_DIR)/ThirdParty/OpenCV/opencv2.framework/Headers",
-					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/include",
-				);
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/ThirdParty/OpenCV",
+					"$(PROJECT_DIR)/Lectigo/Sources/PaddleOCR/Clipper",
 				);
 				SWIFT_OBJC_BRIDGING_HEADER = "Lectigo/Sources/Native/Lectigo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -513,33 +481,21 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Lectigo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/lib",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-lc++",
 					"-ObjC",
-					"-force_load",
-					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/lib/libpaddle_api_light_bundled.a",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.Lectigo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Lectigo/Sources/PaddleOCRCore",
-					"$(PROJECT_DIR)/ThirdParty/OpenCV/opencv2.framework/Headers",
-					"$(PROJECT_DIR)/ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8/include",
-				);
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/ThirdParty/OpenCV",
+					"$(PROJECT_DIR)/Lectigo/Sources/PaddleOCR/Clipper",
 				);
 				SWIFT_OBJC_BRIDGING_HEADER = "Lectigo/Sources/Native/Lectigo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

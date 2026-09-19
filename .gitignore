@@ -8,8 +8,5 @@ xcuserdata/
 *.hmap
 temp/
 artifacts/
-ThirdParty/OpenCV/
-__pycache__/
-*.pyc
-backend/storage/*
-!backend/storage/.gitignore
+Pods/
+Podfile.lock

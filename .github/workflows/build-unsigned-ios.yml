@@ -12,7 +12,7 @@ permissions:
 jobs:
   build:
     name: Build unsigned IPA
-    runs-on: macos-15
+    runs-on: xcode-27
 
     steps:
       - name: Checkout
@@ -21,28 +21,16 @@ jobs:
       - name: Show Xcode version
         run: xcodebuild -version
 
-      - name: Cache OpenCV iOS framework
-        id: cache-opencv
-        uses: actions/cache@v4
-        with:
-          path: ThirdParty/OpenCV/opencv2.framework
-          key: ${{ runner.os }}-opencv-ios-4.5.5-paddle-demo
-
-      - name: Download OpenCV iOS framework
-        if: steps.cache-opencv.outputs.cache-hit != 'true'
+      - name: Install CocoaPods dependencies
         run: |
           set -euo pipefail
-          mkdir -p ThirdParty/OpenCV
-          curl -L "https://paddlelite-demo.bj.bcebos.com/libs/ios/opencv-4.5.5-ios-framework.tar.gz" -o ThirdParty/OpenCV/opencv-ios-framework.tar.gz
-          tar -xzf ThirdParty/OpenCV/opencv-ios-framework.tar.gz -C ThirdParty/OpenCV
-          rm -f ThirdParty/OpenCV/opencv-ios-framework.tar.gz
-          find ThirdParty/OpenCV -name '._*' -delete
+          pod install --repo-update
 
       - name: Build app without code signing
         run: |
           set -euo pipefail
           xcodebuild \
-            -project Lectigo.xcodeproj \
+            -workspace Lectigo.xcworkspace \
             -scheme Lectigo \
             -configuration Release \
             -sdk iphoneos \

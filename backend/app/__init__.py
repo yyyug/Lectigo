@@ -1,1 +1,0 @@
-# Lectigo backend package.

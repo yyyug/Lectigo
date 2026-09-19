@@ -1,34 +1,39 @@
 import UIKit
 
 final class PaddleOCRCaptionRecognizer: CaptionOCRRecognizing {
+    private let sessionManager = ORTSessionManager()
+    private var engine: OCREngine?
+
     func prepare() async throws {
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            DispatchQueue.global(qos: .userInitiated).async {
-                autoreleasepool {
-                    do {
-                        try PaddleOCRBridge.prepare()
-                        continuation.resume(returning: ())
-                    } catch {
-                        continuation.resume(throwing: error)
-                    }
-                }
-            }
-        }
+        try await sessionManager.loadModels(executionProvider: .cpu)
+        engine = try OCREngine(sessionManager: sessionManager)
     }
 
     func recognizeCaption(in image: UIImage) async throws -> String {
-        try await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.global(qos: .userInitiated).async {
-                autoreleasepool {
-                    var error: NSError?
-                    let text = PaddleOCRBridge.recognizeText(in: image, error: &error)
-                    if let error {
-                        continuation.resume(throwing: error)
-                    } else {
-                        continuation.resume(returning: text.trimmingCharacters(in: .whitespacesAndNewlines))
-                    }
-                }
-            }
+        guard let engine else {
+            throw PaddleCaptionRecognizerError.engineNotPrepared
+        }
+        guard let cgImage = image.cgImage else {
+            throw PaddleCaptionRecognizerError.invalidImage
+        }
+        let run = try await engine.run(cgImage)
+        let text = run.results
+            .map(\.text)
+            .joined(separator: " ")
+        return text.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
+enum PaddleCaptionRecognizerError: LocalizedError {
+    case engineNotPrepared
+    case invalidImage
+
+    var errorDescription: String? {
+        switch self {
+        case .engineNotPrepared:
+            return "The PaddleOCR engine has not been prepared yet."
+        case .invalidImage:
+            return "Could not prepare the caption snapshot for PaddleOCR."
         }
     }
 }

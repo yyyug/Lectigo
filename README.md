@@ -1,44 +1,37 @@
 # Lectigo
 
-Lectigo is an iOS SwiftUI app that lets users browse YouTube in a `WKWebView`, request a backend download for the current page URL, fetch a temporary MP4 from a server-backed `yt-dlp` service, play the video locally, and run PaddleOCR v5 on local video frames with VoiceOver accessibility announcements.
+Lectigo is an iOS SwiftUI app that captures the display of another app via ScreenCaptureKit (iOS 27+), runs offline OCR on the subtitle area, and announces new caption lines with VoiceOver.
 
 ## Current State
 
-The app now has three tabs:
+The app has two tabs:
 
-- `Browse` for YouTube navigation and authenticated download requests
-- `Library` for backend job progress, downloaded local videos, and local playback
-- `Settings` for OCR settings plus backend login and base URL configuration
+- `Capture` to start/stop screen capture and show the latest recognized caption
+- `Settings` for OCR engine choice, subtitle crop area, capture interval, and announcement similarity threshold
 
-The repository includes the official Paddle Lite iOS arm64 runtime in `ThirdParty/PaddleLite/inference_lite_lib.ios64.armv8`, the PP-OCRv5 detector/recognizer/classifier `.nb` model assets, the OCR dictionary, config file, and the native Paddle OCR C++ pipeline adapted from the official iOS demo.
+Text recognition runs fully on device through one of two engines:
 
-`Lectigo/Sources/Native/PaddleOCRBridge.mm` converts each local video frame image to an OpenCV matrix, runs the Paddle OCR detector/classifier/recognizer pipeline, and returns recognized caption text to Swift. The app is configured to use Paddle OCR only.
+- `PaddleOCR` – a Swift/Objective-C pipeline executing bundled PP-OCRv5 ONNX models with the `onnxruntime-objc` pod, OpenCV, and the Clipper polygon offset library
+- `iOS Vision (Built-in)` – Apple's `VNRecognizeTextRequest`
 
-## Backend
+The PaddleOCR engine sources live in `Lectigo/Sources/PaddleOCR/` (Swift orchestration plus Objective-C++ OpenCV bridges in `PaddleOCR/CV/` and Clipper in `PaddleOCR/Clipper/`). ONNX models are bundled in `Lectigo/Models/det/` and `Lectigo/Models/rec/`.
 
-The `backend/` folder contains a FastAPI service that:
+`Lectigo/Sources/ScreenCapture/ScreenCaptureCaptionController.swift` presents the content sharing picker, streams `SCStreamOutput` frames, crops the configured region, and drives the selected recognizer.
 
-- authenticates the app with bearer tokens
-- runs `yt-dlp` plus system `ffmpeg`
-- stores temporary MP4 output files
-- exposes download job polling and file fetch endpoints
-- cleans up expired files
+## Dependencies
 
-See `backend/README.md` for setup and deployment.
+Install with CocoaPods (`pod install`) and build the `Lectigo.xcworkspace`:
+
+- `onnxruntime-objc` ~> 1.24
+- `OpenCV` ~> 4.3.0
+- `Yams` ~> 5.0
+
+The `Podfile` post-install hook pins every pod to deployment target 27.0 and disables `CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER`.
 
 ## GitHub Actions Build
 
-The workflow at `.github/workflows/build-unsigned-ios.yml` builds an unsigned `Lectigo-unsigned.ipa` artifact on macOS. It downloads the official `opencv2.framework` during CI because that framework binary is larger than GitHub's per-file repository limit.
+The workflow at `.github/workflows/build-unsigned-ios.yml` runs `pod install`, builds the unsigned `Release-iphoneos` app with `xcodebuild`, and packages `Lectigo-unsigned.ipa`.
 
-## PaddleOCR v5 Files
+## Background Mode
 
-Add these files to the app bundle:
-
-- `PP-OCRv5_mobile_det.nb`
-- `PP-OCRv5_mobile_rec.nb`
-- `PP-OCRv5_mobile_cls.nb` if angle classification is enabled
-- `ppocr_keys_ocrv5.txt`
-
-## YouTube Note
-
-The app still uses a YouTube webpage for browsing, but OCR runs only on locally downloaded playback, not on webpage snapshots. Confirm the product and legal constraints before shipping a public app that downloads and processes YouTube content.
+`Info.plist` includes the `screen-capture` background mode so screen capture can keep running while the app is in the background.

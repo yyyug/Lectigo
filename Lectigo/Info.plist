@@ -6,6 +6,13 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Lectigo</string>
+	<key>NSScreenCaptureUsageDescription</key>
+	<string>Lectigo 需要螢幕截圖權限來擷取螢幕上的文字，並即時朗讀字幕。</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>screen-capture</string>
+		<string>audio</string>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
